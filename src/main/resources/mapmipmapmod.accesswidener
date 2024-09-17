@@ -1,0 +1,5 @@
+accessWidener v2 named
+
+accessible field net/minecraft/client/render/MapRenderer textureManager Lnet/minecraft/client/texture/TextureManager;
+accessible class net/minecraft/client/render/RenderLayer$MultiPhaseParameters
+accessible class net/minecraft/client/render/RenderPhase$Texture
