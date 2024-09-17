@@ -1,0 +1,12 @@
+{
+	"required": true,
+	"package": "com.jalvaviel.mixin.client",
+	"compatibilityLevel": "JAVA_21",
+	"client": [
+		"MapTextureMixin",
+		"VideoOptionsScreenMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}
