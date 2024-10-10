@@ -32,7 +32,7 @@
 	"accessWidener" : "mapmipmapmod.accesswidener",
 	"depends": {
 		"fabricloader": ">=0.16.5",
-		"minecraft": "~1.21.1",
+		"minecraft": "~1.20.5",
 		"java": ">=21",
 		"fabric-api": "*"
 	},
