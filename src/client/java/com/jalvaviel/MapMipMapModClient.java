@@ -24,6 +24,6 @@ public class MapMipMapModClient implements ClientModInitializer {
 		int mipmapLevel = OUTDATED_DRIVER ? 0 : MinecraftClient.getInstance().options.getMipmapLevels().getValue();
 		ATLAS_SIZE = MIPMAP_TO_ATLAS.getOrDefault(mipmapLevel, 1024);
 		MAPS_PER_ATLAS = (ATLAS_SIZE / MAP_SIZE) * (ATLAS_SIZE / MAP_SIZE);
-		MinecraftClient.getInstance().getMapTextureManager().clear();
+		MinecraftClient.getInstance().gameRenderer.getMapRenderer().clearStateTextures(); //getMapTextureManager().clear();
 	}
 }
