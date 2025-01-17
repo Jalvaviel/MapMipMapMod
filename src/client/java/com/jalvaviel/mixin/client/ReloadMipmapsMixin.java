@@ -14,19 +14,14 @@ import static com.jalvaviel.MapMipMapModClient.updateAtlasSize;
 
 @Mixin(MinecraftClient.class)
 public class ReloadMipmapsMixin {
-
+    /**
+     * Sodium workaround that forces the atlas size and all atlases to be updated when the game's resources are reloaded.
+     * (F3+T or by changing the mipmap level option on the game config menu).
+     * @param cir async callback (unused).
+     */
     @Inject(method = "reloadResources()Ljava/util/concurrent/CompletableFuture;",
             at = @At(value = "TAIL"))
     private void onReloadResources(CallbackInfoReturnable<CompletableFuture<Void>> cir) { // FIXME, doesn't mix with sodium
         updateAtlasSize();
     }
-    /*
-    @ModifyArg(method = "reloadResources(ZLnet/minecraft/client/MinecraftClient$LoadingContext;)Ljava/util/concurrent/CompletableFuture;",
-            at = @At(value = "INVOKE",
-                    target = "Lnet/minecraft/client/MinecraftClient;setOverlay(Lnet/minecraft/client/gui/screen/Overlay;)V"))
-    private Overlay onReloadResources(Overlay overlay) { // FIXME, doesn't mix with sodium
-        updateAtlasSize();
-        return overlay;
-    }
-     */
 }

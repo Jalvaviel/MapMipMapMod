@@ -12,6 +12,11 @@ import static com.jalvaviel.MapMipMapModClient.*;
 
 @Mixin(MinecraftClient.class)
 public class MinecraftClientAtlasSizeMixin {
+    /**
+     * Mixin that checks the OpenGl version of the GPU driver. If it's a very old version (OpenGl < 3.0), it stops
+     * MapMipMapMod from working to prevent crashes.
+     * @param ci the method callback (unused).
+     */
     @Inject(method = "onFinishedLoading", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/MinecraftClient;collectLoadTimes(Lnet/minecraft/client/MinecraftClient$LoadingContext;)V"))
     private void onFinishedLoadingAtlasSize(CallbackInfo ci) {
         String openGlVersion = GL11.glGetString(GL11.GL_VERSION).split(" ")[0];

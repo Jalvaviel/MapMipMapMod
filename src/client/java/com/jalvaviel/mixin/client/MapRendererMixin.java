@@ -15,6 +15,9 @@ import static net.minecraft.client.render.RenderPhase.*;
 
 @Mixin(value = MapRenderer.class, priority = 1200)
 public abstract class MapRendererMixin {
+    /**
+     * Mipmap shader for maps. Just a copy of the default one for maps with mipmaps enabled.
+     */
     @Unique
     private static final Function<Identifier, RenderLayer> MAP_MIPMAP_LAYER = Util.memoize(texture -> RenderLayer.of("mapmipmap",
             VertexFormats.POSITION_COLOR_TEXTURE_LIGHT,
@@ -29,6 +32,11 @@ public abstract class MapRendererMixin {
                     .lightmap(ENABLE_LIGHTMAP)
                     .build(true)));
 
+    /**
+     * Applies the shader with the mipmap support when rendering the maps on the world.
+     * @param texture the map atlas identifier.
+     * @return the shader program.
+     */
     @Redirect(method = "draw", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/RenderLayer;getText(Lnet/minecraft/util/Identifier;)Lnet/minecraft/client/render/RenderLayer;"))
     private RenderLayer drawAtlasLayer(Identifier texture) {
         return MAP_MIPMAP_LAYER.apply(texture);
