@@ -1,0 +1,27 @@
+package com.jalvaviel.mixin.client;
+
+import com.jalvaviel.MapMipMapMod;
+import net.minecraft.client.MinecraftClient;
+import org.lwjgl.opengl.GL11;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import static com.jalvaviel.MapMipMapModClient.*;
+
+@Mixin(MinecraftClient.class)
+public class MinecraftClientAtlasSizeMixin {
+    @Inject(method = "onFinishedLoading", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/MinecraftClient;collectLoadTimes(Lnet/minecraft/client/MinecraftClient$LoadingContext;)V"))
+    private void onFinishedLoadingAtlasSize(CallbackInfo ci) {
+        String openGlVersion = GL11.glGetString(GL11.GL_VERSION).split(" ")[0];
+        int majorVersion = Integer.parseInt(openGlVersion.split("\\.")[0]);
+        if (majorVersion < 3) {
+            OUTDATED_DRIVER = true;
+            MapMipMapMod.LOGGER.error("OpenGL version " + openGlVersion + " does not support mipmap generation (>= v3.0).");
+            MapMipMapMod.LOGGER.error("Consider updating your graphics card drivers if possible.");
+            MapMipMapMod.LOGGER.error("Disabling MapMipMapMod...");
+        }
+        updateAtlasSize();
+    }
+}

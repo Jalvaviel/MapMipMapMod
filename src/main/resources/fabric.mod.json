@@ -1,0 +1,42 @@
+{
+	"schemaVersion": 1,
+	"id": "mapmipmapmod",
+	"version": "${version}",
+	"name": "MapMipMapMod",
+	"description": "A Minecraft Mod that fixes the mipmaps for map textures.",
+	"authors": [
+		"Jalvaviel"
+	],
+	"contact": {
+		"homepage": "https://modrinth.com/mod/mapmipmapmod",
+		"sources": "https://github.com/Jalvaviel/MapMipMapMod"
+	},
+	"license": "MIT",
+	"icon": "assets/mapmipmapmod/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"com.jalvaviel.MapMipMapMod"
+		],
+		"client": [
+			"com.jalvaviel.MapMipMapModClient"
+		]
+	},
+	"mixins": [
+		"mapmipmapmod.mixins.json",
+		{
+			"config": "mapmipmapmod.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.16.9",
+		"minecraft": "~1.21.4",
+		"java": ">=21",
+		"fabric-api": "*",
+		"immediatelyfast": ">=1.3.3"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}
