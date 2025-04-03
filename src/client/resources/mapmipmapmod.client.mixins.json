@@ -5,15 +5,15 @@
 	"client": [
 		"MapRendererMixin",
 		"MapRendererMixinSquared",
-		"MapTextureManagerMixin",
-		"MapTextureMixinSquared",
 		"MinecraftClientAtlasSizeMixin",
-		"ReloadMipmapsMixin"
+		"ReloadMipmapsMixin",
+		"MapAtlasTextureMixin",
+		"MapTextureManagerMixin",
+		"MapTextureMixinSquared"
 	],
 	"injectors": {
 		"defaultRequire": 1
 	},
 	"mixins": [
-		"MapAtlasTextureMixin"
 	]
 }

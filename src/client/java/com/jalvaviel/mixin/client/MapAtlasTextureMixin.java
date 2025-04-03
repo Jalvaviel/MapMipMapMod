@@ -18,7 +18,6 @@ public class MapAtlasTextureMixin {
     private int setSizeMapAtlasTexture(int original) {
         return MapMipMapModClient.ATLAS_SIZE;
     }
-
     @ModifyExpressionValue(method="getNextMapLocation", at= @At(value = "CONSTANT", args = "intValue=1024"), remap = false)
     private int setSizeGetNextMapLocation(int original) {
         return MapMipMapModClient.MAPS_PER_ATLAS;

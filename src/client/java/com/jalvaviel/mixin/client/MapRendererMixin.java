@@ -1,5 +1,7 @@
 package com.jalvaviel.mixin.client;
 
+import com.mojang.blaze3d.vertex.VertexFormat;
+import net.minecraft.client.gl.RenderPipelines;
 import net.minecraft.client.render.*;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.TriState;
@@ -19,18 +21,16 @@ public abstract class MapRendererMixin {
      * Mipmap shader for maps. Just a copy of the default one for maps with mipmaps enabled.
      */
     @Unique
-    private static final Function<Identifier, RenderLayer> MAP_MIPMAP_LAYER = Util.memoize(texture -> RenderLayer.of("mapmipmap",
-            VertexFormats.POSITION_COLOR_TEXTURE_LIGHT,
-            VertexFormat.DrawMode.QUADS,
-            786432,
-            false,
-            true,
-            RenderLayer.MultiPhaseParameters.builder()
-                    .program(TEXT_PROGRAM)
-                    .texture(new RenderPhase.Texture(texture, TriState.FALSE, true))
-                    .transparency(TRANSLUCENT_TRANSPARENCY)
-                    .lightmap(ENABLE_LIGHTMAP)
-                    .build(true)));
+    private static final Function<Identifier, RenderLayer> MAP_MIPMAP_LAYER = Util.memoize((texture) ->
+            RenderLayer.of("map_mipmap_layer",
+                    786432,
+                    false, 
+                    true,
+                    RenderPipelines.RENDERTYPE_TEXT,
+                    RenderLayer.MultiPhaseParameters.builder()
+                            .texture(new RenderPhase.Texture(texture, TriState.FALSE, true))
+                            .lightmap(ENABLE_LIGHTMAP)
+                            .build(true)));
 
     /**
      * Applies the shader with the mipmap support when rendering the maps on the world.

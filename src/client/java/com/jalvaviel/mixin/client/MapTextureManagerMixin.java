@@ -23,4 +23,5 @@ public class MapTextureManagerMixin {
             ci.cancel();
         }
     }
+
 }

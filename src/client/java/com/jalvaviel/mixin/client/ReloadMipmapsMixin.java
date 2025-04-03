@@ -21,7 +21,7 @@ public class ReloadMipmapsMixin {
      */
     @Inject(method = "reloadResources()Ljava/util/concurrent/CompletableFuture;",
             at = @At(value = "TAIL"))
-    private void onReloadResources(CallbackInfoReturnable<CompletableFuture<Void>> cir) { // FIXME, doesn't mix with sodium
+    private void onReloadResources(CallbackInfoReturnable<CompletableFuture<Void>> cir) {
         updateAtlasSize();
     }
 }
