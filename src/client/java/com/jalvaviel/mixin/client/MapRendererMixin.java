@@ -1,6 +1,5 @@
 package com.jalvaviel.mixin.client;
 
-import com.mojang.blaze3d.vertex.VertexFormat;
 import net.minecraft.client.gl.RenderPipelines;
 import net.minecraft.client.render.*;
 import net.minecraft.util.Identifier;
@@ -24,7 +23,7 @@ public abstract class MapRendererMixin {
     private static final Function<Identifier, RenderLayer> MAP_MIPMAP_LAYER = Util.memoize((texture) ->
             RenderLayer.of("map_mipmap_layer",
                     786432,
-                    false, 
+                    false,
                     true,
                     RenderPipelines.RENDERTYPE_TEXT,
                     RenderLayer.MultiPhaseParameters.builder()
