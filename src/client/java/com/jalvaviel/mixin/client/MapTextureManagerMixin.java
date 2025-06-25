@@ -1,5 +1,6 @@
 package com.jalvaviel.mixin.client;
 
+import com.jalvaviel.MapMipMapModClient;
 import net.minecraft.client.texture.MapTextureManager;
 import net.minecraft.component.type.MapIdComponent;
 import net.minecraft.item.map.MapState;
@@ -19,7 +20,7 @@ public class MapTextureManagerMixin {
      */
     @Inject(method = "setNeedsUpdate", at = @At("HEAD"), cancellable = true)
     public void setNeedsUpdate(MapIdComponent mapIdComponent, MapState mapState, CallbackInfo ci){
-        if (mapState.locked) {
+        if (mapState.locked && MapMipMapModClient.options().generalOptions.isLockedMapUpdates()) {
             ci.cancel();
         }
     }

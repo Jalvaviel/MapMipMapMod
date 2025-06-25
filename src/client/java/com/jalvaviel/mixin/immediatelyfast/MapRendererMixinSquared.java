@@ -1,4 +1,4 @@
-package com.jalvaviel.mixin.client;
+package com.jalvaviel.mixin.immediatelyfast;
 
 import com.bawnorton.mixinsquared.TargetHandler;
 import com.jalvaviel.MapMipMapModClient;
@@ -21,6 +21,6 @@ public abstract class MapRendererMixinSquared {
     @TargetHandler(mixin = "net.raphimc.immediatelyfast.injection.mixins.map_atlas_generation.MixinMapRenderer", name = "drawAtlasTexture")
     @ModifyExpressionValue(method = "@MixinSquared:Handler", at = @At(value = "CONSTANT", args = "floatValue=4096.0F")) //
     public float onDrawAtlasTexture(float original){
-        return MapMipMapModClient.ATLAS_SIZE;
+        return MapMipMapModClient.options().generalOptions.getAtlasSize();
     }
 }
