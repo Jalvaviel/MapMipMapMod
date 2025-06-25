@@ -1,0 +1,11 @@
+{
+	"required": false,
+	"package": "com.jalvaviel.mixin.sodium",
+	"compatibilityLevel": "JAVA_21",
+	"client": [
+		"SodiumOptionsGuiMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}
