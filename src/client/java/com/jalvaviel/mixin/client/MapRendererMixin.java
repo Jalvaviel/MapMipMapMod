@@ -30,6 +30,8 @@ public abstract class MapRendererMixin {
                             .texture(new RenderPhase.Texture(texture, TriState.FALSE, true))
                             .lightmap(ENABLE_LIGHTMAP)
                             .build(true)));
+    //TEXT = Util.memoize((texture) ->
+    //of("text", 786432, false, false, RenderPipelines.RENDERTYPE_TEXT, RenderLayer.MultiPhaseParameters.builder().texture(new RenderPhase.Texture(texture, false)).lightmap(ENABLE_LIGHTMAP).build(false)));
 
     /**
      * Applies the shader with the mipmap support when rendering the maps on the world.
