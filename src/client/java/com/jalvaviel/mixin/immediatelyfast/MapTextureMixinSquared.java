@@ -39,11 +39,13 @@ public class MapTextureMixinSquared {
     )
     @Inject(method = "@MixinSquared:Handler", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/texture/NativeImageBackedTexture;bindTexture()V")) // OK
     public void updateAtlasTexture(CallbackInfo ci) {
-        NativeImageBackedTexture atlasTexture = this.immediatelyFast$atlasTexture.getTexture();
-        NativeImage atlasImage = atlasTexture.getImage();
-        int mipmapValue = MapMipMapModClient.options().generalOptions.getMapmipmapLevels();
-        TextureUtil.prepareImage(atlasTexture.getGlId(), mipmapValue, atlasImage.getWidth(), atlasImage.getHeight());
-        atlasTexture.upload();
-        GL30.glGenerateMipmap(GL30.GL_TEXTURE_2D);
+        if (!MapMipMapModClient.OUTDATED_DRIVER) {
+            NativeImageBackedTexture atlasTexture = this.immediatelyFast$atlasTexture.getTexture();
+            NativeImage atlasImage = atlasTexture.getImage();
+            int mipmapValue = MapMipMapModClient.options().generalOptions.getMapmipmapLevels();
+            TextureUtil.prepareImage(atlasTexture.getGlId(), mipmapValue, atlasImage.getWidth(), atlasImage.getHeight());
+            atlasTexture.upload();
+            GL30.glGenerateMipmap(GL30.GL_TEXTURE_2D);
+        }
     }
 }
