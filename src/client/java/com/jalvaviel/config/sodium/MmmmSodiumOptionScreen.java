@@ -6,7 +6,7 @@ import net.caffeinemc.mods.sodium.client.gui.options.control.ControlValueFormatt
 import net.caffeinemc.mods.sodium.client.gui.options.control.SliderControl;
 import net.caffeinemc.mods.sodium.client.gui.options.control.TickBoxControl;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.option.SimpleOption;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.text.Text;
 
 import java.util.ArrayList;
@@ -18,10 +18,12 @@ import static com.jalvaviel.MapMipMapModClient.MAP_SIZE;
  * The options screen for MapMipMapMod with sodium. It gets called when the MapMipMapMod tab is selected in the sodium's SodiumOptionsGUI screen.
  * @see com.jalvaviel.mixin.sodium.SodiumOptionsGuiMixin
  */
-public class MmmmSodiumOptionScreen {
+public class MmmmSodiumOptionScreen extends Screen {
     private static final MmmmSodiumOptionsStorage mmmmOpts = new MmmmSodiumOptionsStorage();
 
-    public MmmmSodiumOptionScreen() {}
+    public MmmmSodiumOptionScreen() {
+        super(Text.translatable("tab.mapmipmapmod.general"));
+    }
 
     /**
      * Just a text formatter to display -1 in mapMipMapLevels as "Auto"

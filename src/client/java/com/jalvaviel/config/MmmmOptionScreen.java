@@ -1,8 +1,8 @@
 package com.jalvaviel.config;
 
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.option.GameOptionsScreen;
-import net.minecraft.client.gui.screen.option.VideoOptionsScreen;
 import net.minecraft.client.option.GameOptions;
 import net.minecraft.client.option.SimpleOption;
 import net.minecraft.text.Text;
@@ -11,7 +11,7 @@ import static com.jalvaviel.MapMipMapModClient.LOG;
 import static com.jalvaviel.MapMipMapModClient.MAP_SIZE;
 
 /** <h1>MmmmOptionScreen class</h1>
- * The options screen for MapMipMapMod without sodium. It gets called when the MapMipMapMod button is pressed in the vanilla's VideoOptionsScreen
+ * The option screen for MapMipMapMod without sodium. It gets called when the MapMipMapMod button is pressed in the vanilla's VideoOptionsScreen
  * @see com.jalvaviel.mixin.client.VideoOptionsScreenMixin
  */
 public class MmmmOptionScreen extends GameOptionsScreen {
@@ -19,11 +19,11 @@ public class MmmmOptionScreen extends GameOptionsScreen {
     private static final MmmmOptionsStorage mmmmOpts = new MmmmOptionsStorage();
 
     /**
-     * The options screen constructor.
+     * The option screen constructor.
      * @param parent the parent screen (previous screen).
-     * @param gameOptions the gameOptions with most of the vanilla config. (I don't know why it's mandatory for any GameOptionsScreen children when addOptions exists).
+     * @param gameOptions the gameOptions with most of the vanilla config. (I don't know why it's mandatory for any GameOptionsScreen children when addOptions exist).
      */
-    public MmmmOptionScreen(VideoOptionsScreen parent, GameOptions gameOptions) {
+    public MmmmOptionScreen(Screen parent, GameOptions gameOptions) {
         super(parent, gameOptions, Text.translatable("tab.mapmipmapmod.general"));
     }
 
@@ -43,9 +43,12 @@ public class MmmmOptionScreen extends GameOptionsScreen {
                         Text.literal(Integer.toString(value));
                     return Text.translatable("entry.mapmipmapmod.map_mipmap_levels").append(": "+textValue.getString());
                 },
-                new SimpleOption.ValidatingIntSliderCallbacks(-1, 8),
+                new SimpleOption.ValidatingIntSliderCallbacks(-1, 8, false),
                 mmmmOpts.getData().generalOptions.getLiteralMapmipmapLevels(),
-                (value) -> mmmmOpts.getData().generalOptions.setMapmipmapLevels(value));
+                (value) -> {
+                    mmmmOpts.getData().generalOptions.setMapmipmapLevels(value);
+                    MinecraftClient.getInstance().getMapTextureManager().clear();
+                });
 
         // Atlas Size Option
         SimpleOption<Integer> atlasSize = new SimpleOption<>(
@@ -57,9 +60,12 @@ public class MmmmOptionScreen extends GameOptionsScreen {
                         Text.literal(value + "x" + value + " (" + (value * MAP_SIZE) + "x" + (value * MAP_SIZE) + "px)");
                     return Text.translatable("entry.mapmipmapmod.atlas_size").append(": "+textValue.getString());
                 },
-                new SimpleOption.ValidatingIntSliderCallbacks(0, 32),
+                new SimpleOption.ValidatingIntSliderCallbacks(0, 32, false),
                 mmmmOpts.getData().generalOptions.getLiteralAtlasSize(),
-                (value) -> mmmmOpts.getData().generalOptions.setAtlasSize(value));
+                (value) -> {
+                    mmmmOpts.getData().generalOptions.setAtlasSize(value);
+                    MinecraftClient.getInstance().getMapTextureManager().clear();
+                });
 
         // Locked Map Updates Option
         SimpleOption<Boolean> lockedMapUpdates = SimpleOption.ofBoolean(

@@ -42,9 +42,11 @@ dependencies {
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-	modImplementation "curse.maven:immediatelyfast-686911:6677724"
+	modImplementation "maven.modrinth:immediatelyfast:${project.immediatelyfast_version}"
 
-	modImplementation "curse.maven:sodium-394468:6661395"
+	modImplementation "maven.modrinth:sodium:${project.sodium_version}"
+
+	modApi "com.terraformersmc:modmenu:15.0.0-beta.1"
 
 	include(implementation(annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-fabric:0.3.3")))
 }
