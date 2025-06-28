@@ -90,6 +90,5 @@ public class MmmmOptionScreen extends GameOptionsScreen {
         mmmmOpts.save();
         MinecraftClient.getInstance().getMapTextureManager().clear();
         super.close();
-        LOG.info("Closing MmmmOptionScreen");
     }
 }
