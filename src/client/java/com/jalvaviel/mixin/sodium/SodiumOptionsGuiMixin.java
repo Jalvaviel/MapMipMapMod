@@ -28,4 +28,5 @@ public class SodiumOptionsGuiMixin {
     private void onInit(CallbackInfo ci) {
         pages.add(MmmmSodiumOptionScreen.general());
     }
+
 }

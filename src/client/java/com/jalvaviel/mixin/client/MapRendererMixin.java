@@ -19,7 +19,7 @@ public abstract class MapRendererMixin {
      * Mipmap shader for maps. Just a copy of the default one for maps with mipmaps enabled.
      */
     @Unique
-    private static final Function<Identifier, RenderLayer> MAP_MIPMAP_LAYER = Util.memoize(texture -> RenderLayer.of("mapmipmap",
+    private static final Function<Identifier, RenderLayer> MAP_MIPMAP_LAYER = Util.memoize(texture -> RenderLayer.of("map_mipmap_layer",
             VertexFormats.POSITION_COLOR_TEXTURE_LIGHT,
             VertexFormat.DrawMode.QUADS,
             786432,
@@ -31,6 +31,8 @@ public abstract class MapRendererMixin {
                     .transparency(TRANSLUCENT_TRANSPARENCY)
                     .lightmap(ENABLE_LIGHTMAP)
                     .build(true)));
+    //TEXT = Util.memoize((texture) ->
+    //of("text", 786432, false, false, RenderPipelines.RENDERTYPE_TEXT, RenderLayer.MultiPhaseParameters.builder().texture(new RenderPhase.Texture(texture, false)).lightmap(ENABLE_LIGHTMAP).build(false)));
 
     /**
      * Applies the shader with the mipmap support when rendering the maps on the world.

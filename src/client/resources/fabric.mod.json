@@ -18,6 +18,9 @@
 	"entrypoints": {
 		"client": [
 			"com.jalvaviel.MapMipMapModClient"
+		],
+		"modmenu": [
+			"com.jalvaviel.config.modmenu.MmmmModMenuIntegration"
 		]
 	},
 	"mixins": [
@@ -35,11 +38,11 @@
 		}
 	],
 	"depends": {
-		"fabricloader": ">=0.16.9",
+		"fabricloader": ">=0.16.14",
 		"minecraft": "~1.21.4",
 		"java": ">=21",
 		"fabric-api": "*",
-		"immediatelyfast": ">=1.3.3"
+		"immediatelyfast": ">=1.8"
 	},
 	"suggests": {
 		"another-mod": "*"
