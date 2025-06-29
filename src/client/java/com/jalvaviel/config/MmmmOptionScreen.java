@@ -77,6 +77,7 @@ public class MmmmOptionScreen extends GameOptionsScreen {
         list.addSingleOptionEntry(lockedMapUpdates);
         this.addDrawableChild(ButtonWidget.builder(ScreenTexts.DONE, (button) -> {
             this.gameOptions.write();
+            MinecraftClient.getInstance().gameRenderer.getMapRenderer().clearStateTextures();
             this.client.setScreen(this.parent);
         }).dimensions(this.width / 2 - 100, this.height - 27, 200, 20).build());
     }
