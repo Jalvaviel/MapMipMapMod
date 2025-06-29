@@ -1,26 +1,42 @@
 package com.jalvaviel.mixin.client;
 
-import net.minecraft.client.render.MapRenderer;
-import net.minecraft.component.type.MapIdComponent;
-import net.minecraft.item.map.MapState;
+import net.minecraft.client.render.*;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.Util;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.Redirect;
+import java.util.function.Function;
 
-@Mixin(value = {MapRenderer.class}, priority = 1200)
+import static net.minecraft.client.render.RenderPhase.*;
+
+@Mixin(value = MapRenderer.MapTexture.class, priority = 1200)
 public class MapTextureManagerMixin {
     /**
-     * This mixin ignores map updates (which happen very frequently) for locked maps, since they aren't supposed to
-     * be updated. It helps frame stability and removes lag spikes when loading lots of maps simultaneously.
-     * @param mapIdComponent the MapIdComponent object (unused).
-     * @param mapState the mapState object, which contains if the map is locked or not.
-     * @param ci callback which gets cancelled if the map is locked, effectively removing a lot of pointless logic.
+     * Mipmap shader for maps. Just a copy of the default one for maps with mipmaps enabled.
      */
-    @Inject(method = "updateTexture", at = @At("HEAD"), cancellable = true)
-    public void setNeedsUpdate(MapIdComponent mapIdComponent, MapState mapState, CallbackInfo ci){
-        if (mapState.locked) {
-            ci.cancel();
-        }
+    @Unique
+    private static final Function<Identifier, RenderLayer> MAP_MIPMAP_LAYER = Util.memoize(texture -> RenderLayer.of("map_mipmap_layer",
+            VertexFormats.POSITION_COLOR_TEXTURE_LIGHT,
+            VertexFormat.DrawMode.QUADS,
+            786432,
+            false,
+            true,
+            RenderLayer.MultiPhaseParameters.builder()
+                    .program(TEXT_PROGRAM)
+                    .texture(new RenderPhase.Texture(texture, false,true))
+                    .transparency(TRANSLUCENT_TRANSPARENCY)
+                    .lightmap(ENABLE_LIGHTMAP)
+                    .build(true)));
+
+    /**
+     * Applies the shader function and saves it as the default renderLayer for maps.
+     * @param identifier The map atlas identifier.
+     * @return the custom renderLayer function applied and assigned.
+     */
+    @Redirect(method = "<init>", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/RenderLayer;getText(Lnet/minecraft/util/Identifier;)Lnet/minecraft/client/render/RenderLayer;"))
+    private RenderLayer redirectRenderLayerGetText(Identifier identifier) {
+        return MAP_MIPMAP_LAYER.apply(identifier);
     }
 }
