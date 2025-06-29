@@ -7,7 +7,6 @@ import me.jellysquid.mods.sodium.client.gui.options.control.SliderControl;
 import me.jellysquid.mods.sodium.client.gui.options.control.TickBoxControl;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.resource.language.I18n;
 import net.minecraft.text.Text;
 
 import java.util.ArrayList;
@@ -31,7 +30,7 @@ public class MmmmSodiumOptionScreen extends Screen {
      * @return the consumer with the Text depending on if it is "Auto" or any other value.
      */
     static ControlValueFormatter mapMipMapLevels() {
-        return (v) -> (v == -1 ? I18n.translate("entry.mapmipmapmod.auto") : String.valueOf(v));
+        return (v) -> v == -1 ? Text.translatable("entry.mapmipmapmod.auto") : Text.literal(String.valueOf(v));
     }
 
     /**
@@ -39,7 +38,7 @@ public class MmmmSodiumOptionScreen extends Screen {
      * @return the consumer with the Text depending on if it is "Auto" or any other value.
      */
     static ControlValueFormatter atlasSize() {
-        return (v) -> (v == 0 ? I18n.translate("entry.mapmipmapmod.auto") : (v + "x" + v + " (" + v*MAP_SIZE + "x" + v*MAP_SIZE + "px)"));
+        return (v) -> v == 0 ? Text.translatable("entry.mapmipmapmod.auto") : Text.literal(v + "x" + v + " (" + v*MAP_SIZE + "x" + v*MAP_SIZE + "px)");
     }
 
     /**
