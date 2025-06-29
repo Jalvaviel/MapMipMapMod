@@ -3,9 +3,11 @@ package com.jalvaviel.config;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.option.GameOptionsScreen;
+import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.gui.widget.OptionListWidget;
 import net.minecraft.client.option.GameOptions;
 import net.minecraft.client.option.SimpleOption;
+import net.minecraft.screen.ScreenTexts;
 import net.minecraft.text.Text;
 
 import static com.jalvaviel.MapMipMapModClient.MAP_SIZE;
@@ -33,7 +35,7 @@ public class MmmmOptionScreen extends GameOptionsScreen {
      */
     protected void init() {
         // Map Mipmap Levels Option
-        this.list = this.addDrawableChild(new OptionListWidget(this.client, this.width, this.height, this));
+        this.list = this.addDrawableChild(new OptionListWidget(this.client, this.width, this.height - 64, 32, 25));
         SimpleOption<Integer> mapmipmapLevels = new SimpleOption<>(
                 "entry.mapmipmapmod.map_mipmap_levels",
                 SimpleOption.constantTooltip(Text.translatable("tooltip.mapmipmapmod.map_mipmap_levels")),
@@ -43,7 +45,7 @@ public class MmmmOptionScreen extends GameOptionsScreen {
                         Text.literal(Integer.toString(value));
                     return Text.translatable("entry.mapmipmapmod.map_mipmap_levels").append(": "+textValue.getString());
                 },
-                new SimpleOption.ValidatingIntSliderCallbacks(-1, 8, false),
+                new SimpleOption.ValidatingIntSliderCallbacks(-1, 8),
                 mmmmOpts.getData().generalOptions.getLiteralMapmipmapLevels(),
                 (value) -> {
                     mmmmOpts.getData().generalOptions.setMapmipmapLevels(value);
@@ -60,7 +62,7 @@ public class MmmmOptionScreen extends GameOptionsScreen {
                         Text.literal(value + "x" + value + " (" + (value * MAP_SIZE) + "x" + (value * MAP_SIZE) + "px)");
                     return Text.translatable("entry.mapmipmapmod.atlas_size").append(": "+textValue.getString());
                 },
-                new SimpleOption.ValidatingIntSliderCallbacks(0, 32, false),
+                new SimpleOption.ValidatingIntSliderCallbacks(0, 32),
                 mmmmOpts.getData().generalOptions.getLiteralAtlasSize(),
                 (value) -> {
                     mmmmOpts.getData().generalOptions.setAtlasSize(value);
@@ -78,7 +80,10 @@ public class MmmmOptionScreen extends GameOptionsScreen {
         this.list.addSingleOptionEntry(mapmipmapLevels);
         this.list.addSingleOptionEntry(atlasSize);
         this.list.addSingleOptionEntry(lockedMapUpdates);
-        super.init();
+        this.addDrawableChild(ButtonWidget.builder(ScreenTexts.DONE, (button) -> {
+            this.gameOptions.write();
+            this.client.setScreen(this.parent);
+        }).dimensions(this.width / 2 - 100, this.height - 27, 200, 20).build());
     }
 
     /**
