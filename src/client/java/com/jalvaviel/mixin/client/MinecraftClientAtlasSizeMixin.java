@@ -16,7 +16,7 @@ public class MinecraftClientAtlasSizeMixin {
      * MapMipMapMod from working to prevent crashes.
      * @param ci the method callback (unused).
      */
-    @Inject(method = "onFinishedLoading", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/MinecraftClient;collectLoadTimes(Lnet/minecraft/client/MinecraftClient$LoadingContext;)V"))
+    @Inject(method = "onInitFinished", at = @At("HEAD"))
     private void onFinishedLoadingAtlasSize(CallbackInfo ci) {
         String openGlVersion = GL11.glGetString(GL11.GL_VERSION).split(" ")[0];
         int majorVersion = Integer.parseInt(openGlVersion.split("\\.")[0]);
