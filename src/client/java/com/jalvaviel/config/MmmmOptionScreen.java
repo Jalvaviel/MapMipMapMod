@@ -48,9 +48,7 @@ public class MmmmOptionScreen extends GameOptionsScreen {
                 },
                 new SimpleOption.ValidatingIntSliderCallbacks(-1, 8),
                 mmmmOpts.getData().generalOptions.getLiteralMapmipmapLevels(),
-                (value) -> {
-                    mmmmOpts.getData().generalOptions.setMapmipmapLevels(value);
-                });
+                (value) -> mmmmOpts.getData().generalOptions.setMapmipmapLevels(value));
 
         // Atlas Size Option
         SimpleOption<Integer> atlasSize = new SimpleOption<>(
@@ -64,9 +62,7 @@ public class MmmmOptionScreen extends GameOptionsScreen {
                 },
                 new SimpleOption.ValidatingIntSliderCallbacks(0, 32),
                 mmmmOpts.getData().generalOptions.getLiteralAtlasSize(),
-                (value) -> {
-                    mmmmOpts.getData().generalOptions.setAtlasSize(value);
-                });
+                (value) -> mmmmOpts.getData().generalOptions.setAtlasSize(value));
 
         // Locked Map Updates Option
         SimpleOption<Boolean> lockedMapUpdates = SimpleOption.ofBoolean(
