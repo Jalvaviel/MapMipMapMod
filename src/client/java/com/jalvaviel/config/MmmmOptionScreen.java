@@ -1,6 +1,7 @@
 package com.jalvaviel.config;
 
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.option.GameOptionsScreen;
 import net.minecraft.client.gui.widget.ButtonWidget;
@@ -19,7 +20,7 @@ import static com.jalvaviel.MapMipMapModClient.MAP_SIZE;
 public class MmmmOptionScreen extends GameOptionsScreen {
 
     private static final MmmmOptionsStorage mmmmOpts = new MmmmOptionsStorage();
-    private OptionListWidget list;
+
     /**
      * The option screen constructor.
      * @param parent the parent screen (previous screen).
@@ -35,7 +36,7 @@ public class MmmmOptionScreen extends GameOptionsScreen {
      */
     protected void init() {
         // Map Mipmap Levels Option
-        this.list = this.addDrawableChild(new OptionListWidget(this.client, this.width, this.height - 64, 32, 25));
+        OptionListWidget list = this.addDrawableChild(new OptionListWidget(this.client, this.width, this.height - 64, 32, 25));
         SimpleOption<Integer> mapmipmapLevels = new SimpleOption<>(
                 "entry.mapmipmapmod.map_mipmap_levels",
                 SimpleOption.constantTooltip(Text.translatable("tooltip.mapmipmapmod.map_mipmap_levels")),
@@ -49,7 +50,6 @@ public class MmmmOptionScreen extends GameOptionsScreen {
                 mmmmOpts.getData().generalOptions.getLiteralMapmipmapLevels(),
                 (value) -> {
                     mmmmOpts.getData().generalOptions.setMapmipmapLevels(value);
-                    MinecraftClient.getInstance().gameRenderer.getMapRenderer().clearStateTextures();
                 });
 
         // Atlas Size Option
@@ -66,7 +66,6 @@ public class MmmmOptionScreen extends GameOptionsScreen {
                 mmmmOpts.getData().generalOptions.getLiteralAtlasSize(),
                 (value) -> {
                     mmmmOpts.getData().generalOptions.setAtlasSize(value);
-                    MinecraftClient.getInstance().gameRenderer.getMapRenderer().clearStateTextures();
                 });
 
         // Locked Map Updates Option
@@ -77,9 +76,9 @@ public class MmmmOptionScreen extends GameOptionsScreen {
                 (value) -> mmmmOpts.getData().generalOptions.setLockedMapUpdates(value));
 
         // Add all options to the screen body with full width
-        this.list.addSingleOptionEntry(mapmipmapLevels);
-        this.list.addSingleOptionEntry(atlasSize);
-        this.list.addSingleOptionEntry(lockedMapUpdates);
+        list.addSingleOptionEntry(mapmipmapLevels);
+        list.addSingleOptionEntry(atlasSize);
+        list.addSingleOptionEntry(lockedMapUpdates);
         this.addDrawableChild(ButtonWidget.builder(ScreenTexts.DONE, (button) -> {
             this.gameOptions.write();
             this.client.setScreen(this.parent);
@@ -95,5 +94,16 @@ public class MmmmOptionScreen extends GameOptionsScreen {
         mmmmOpts.save();
         MinecraftClient.getInstance().gameRenderer.getMapRenderer().clearStateTextures();
         super.close();
+    }
+
+    @Override
+    public void renderBackground(DrawContext context, int mouseX, int mouseY, float delta) {
+        this.renderBackgroundTexture(context);
+    }
+
+    @Override
+    public void render(DrawContext context, int mouseX, int mouseY, float delta) {
+        super.render(context, mouseX, mouseY, delta);
+        context.drawCenteredTextWithShadow(this.textRenderer, this.title, this.width / 2, 8, 16777215);
     }
 }
