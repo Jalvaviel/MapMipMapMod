@@ -2,7 +2,7 @@ package com.jalvaviel.config.sodium;
 
 import com.jalvaviel.MapMipMapModClient;
 import com.jalvaviel.config.MmmmGameOptions;
-import net.caffeinemc.mods.sodium.client.gui.options.storage.OptionStorage;
+import me.jellysquid.mods.sodium.client.gui.options.storage.OptionStorage;
 
 import java.io.IOException;
 
@@ -10,7 +10,7 @@ import java.io.IOException;
  * <h1>MmmmSodiumOptionsStorage class</h1>
  * A lightweight class that provides an interface to communicate with the MmmmGameOptions instance to save it to disk and get its options.
  * This only gets used if Sodium is present.
- * @see net.caffeinemc.mods.sodium.client.gui.options.storage.OptionStorage
+ * @see me.jellysquid.mods.sodium.client.gui.options.storage.OptionStorage
  */
 public class MmmmSodiumOptionsStorage implements OptionStorage<MmmmGameOptions> {
     private final MmmmGameOptions options = MapMipMapModClient.options();

@@ -1,10 +1,10 @@
 package com.jalvaviel.config.sodium;
 
 import com.google.common.collect.ImmutableList;
-import net.caffeinemc.mods.sodium.client.gui.options.*;
-import net.caffeinemc.mods.sodium.client.gui.options.control.ControlValueFormatter;
-import net.caffeinemc.mods.sodium.client.gui.options.control.SliderControl;
-import net.caffeinemc.mods.sodium.client.gui.options.control.TickBoxControl;
+import me.jellysquid.mods.sodium.client.gui.options.*;
+import me.jellysquid.mods.sodium.client.gui.options.control.ControlValueFormatter;
+import me.jellysquid.mods.sodium.client.gui.options.control.SliderControl;
+import me.jellysquid.mods.sodium.client.gui.options.control.TickBoxControl;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.text.Text;
@@ -15,7 +15,7 @@ import java.util.List;
 import static com.jalvaviel.MapMipMapModClient.MAP_SIZE;
 
 /** <h1>MmmmOptionScreen class</h1>
- * The options screen for MapMipMapMod with sodium. It gets called when the MapMipMapMod tab is selected in the sodium's SodiumOptionsGUI screen.
+ * The option screen for MapMipMapMod with sodium. It gets called when the MapMipMapMod tab is selected in the sodium's SodiumOptionsGUI screen.
  * @see com.jalvaviel.mixin.sodium.SodiumOptionsGuiMixin
  */
 public class MmmmSodiumOptionScreen extends Screen {
@@ -27,7 +27,7 @@ public class MmmmSodiumOptionScreen extends Screen {
 
     /**
      * Just a text formatter to display -1 in mapMipMapLevels as "Auto"
-     * @return the consumer with the Text depending if it is "Auto" or any other value.
+     * @return the consumer with the Text depending on if it is "Auto" or any other value.
      */
     static ControlValueFormatter mapMipMapLevels() {
         return (v) -> v == -1 ? Text.translatable("entry.mapmipmapmod.auto") : Text.literal(String.valueOf(v));
@@ -35,7 +35,7 @@ public class MmmmSodiumOptionScreen extends Screen {
 
     /**
      * Just a text formatter to display 0 in atlasSize as "Auto"
-     * @return the consumer with the Text depending if it is "Auto" or any other value.
+     * @return the consumer with the Text depending on if it is "Auto" or any other value.
      */
     static ControlValueFormatter atlasSize() {
         return (v) -> v == 0 ? Text.translatable("entry.mapmipmapmod.auto") : Text.literal(v + "x" + v + " (" + v*MAP_SIZE + "x" + v*MAP_SIZE + "px)");

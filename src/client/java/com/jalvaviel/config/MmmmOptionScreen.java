@@ -3,6 +3,7 @@ package com.jalvaviel.config;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.option.GameOptionsScreen;
+import net.minecraft.client.gui.widget.OptionListWidget;
 import net.minecraft.client.option.GameOptions;
 import net.minecraft.client.option.SimpleOption;
 import net.minecraft.text.Text;
@@ -16,7 +17,7 @@ import static com.jalvaviel.MapMipMapModClient.MAP_SIZE;
 public class MmmmOptionScreen extends GameOptionsScreen {
 
     private static final MmmmOptionsStorage mmmmOpts = new MmmmOptionsStorage();
-
+    private OptionListWidget list;
     /**
      * The option screen constructor.
      * @param parent the parent screen (previous screen).
@@ -30,9 +31,9 @@ public class MmmmOptionScreen extends GameOptionsScreen {
      * Adds the options for MapMipMapMod using vanilla's SimpleOption builders.
      * @see SimpleOption
      */
-    @Override
-    protected void addOptions() {
+    protected void init() {
         // Map Mipmap Levels Option
+        this.list = this.addDrawableChild(new OptionListWidget(this.client, this.width, this.height, this));
         SimpleOption<Integer> mapmipmapLevels = new SimpleOption<>(
                 "entry.mapmipmapmod.map_mipmap_levels",
                 SimpleOption.constantTooltip(Text.translatable("tooltip.mapmipmapmod.map_mipmap_levels")),
@@ -74,9 +75,10 @@ public class MmmmOptionScreen extends GameOptionsScreen {
                 (value) -> mmmmOpts.getData().generalOptions.setLockedMapUpdates(value));
 
         // Add all options to the screen body with full width
-        this.body.addSingleOptionEntry(mapmipmapLevels);
-        this.body.addSingleOptionEntry(atlasSize);
-        this.body.addSingleOptionEntry(lockedMapUpdates);
+        this.list.addSingleOptionEntry(mapmipmapLevels);
+        this.list.addSingleOptionEntry(atlasSize);
+        this.list.addSingleOptionEntry(lockedMapUpdates);
+        super.init();
     }
 
     /**
