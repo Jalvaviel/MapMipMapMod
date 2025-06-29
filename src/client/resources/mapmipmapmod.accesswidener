@@ -1,8 +1,9 @@
 accessWidener v1 named
 
+accessible class net/minecraft/client/texture/MapTextureManager$MapTexture
 accessible class net/minecraft/client/render/RenderPhase$Texture
 accessible class net/minecraft/client/render/MapRenderer$MapTexture
-accessible method net/minecraft/client/render/RenderLayer of (Ljava/lang/String;Lnet/minecraft/client/render/VertexFormat;Lnet/minecraft/client/render/VertexFormat$DrawMode;IZZLnet/minecraft/client/render/RenderLayer$MultiPhaseParameters;)Lnet/minecraft/client/render/RenderLayer$MultiPhase;
-accessible field net/minecraft/client/render/RenderPhase TEXT_PROGRAM Lnet/minecraft/client/render/RenderPhase$ShaderProgram;
-accessible field net/minecraft/client/render/RenderPhase TRANSLUCENT_TRANSPARENCY Lnet/minecraft/client/render/RenderPhase$Transparency;
-accessible field net/minecraft/client/render/RenderPhase ENABLE_LIGHTMAP Lnet/minecraft/client/render/RenderPhase$Lightmap;
+#accessible method net/minecraft/client/render/RenderLayer of (Ljava/lang/String;Lnet/minecraft/client/render/VertexFormat;Lnet/minecraft/client/render/VertexFormat$DrawMode;IZZLnet/minecraft/client/render/RenderLayer$MultiPhaseParameters;)Lnet/minecraft/client/render/RenderLayer$MultiPhase;
+#accessible field net/minecraft/client/render/RenderPhase TEXT_PROGRAM Lnet/minecraft/client/render/RenderPhase$ShaderProgram;
+#accessible field net/minecraft/client/render/RenderPhase TRANSLUCENT_TRANSPARENCY Lnet/minecraft/client/render/RenderPhase$Transparency;
+#accessible field net/minecraft/client/render/RenderPhase ENABLE_LIGHTMAP Lnet/minecraft/client/render/RenderPhase$Lightmap;

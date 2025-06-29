@@ -1,5 +1,5 @@
 plugins {
-	id 'fabric-loom' version '1.9-SNAPSHOT'
+	id 'fabric-loom' version '1.10-SNAPSHOT'
 	id 'maven-publish'
 }
 
@@ -42,8 +42,14 @@ dependencies {
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
+	//modImplementation "maven.modrinth:immediatelyfast:${project.immediatelyfast_version}"
 	modImplementation "curse.maven:immediatelyfast-686911:5959913"
-	include(implementation(annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-fabric:0.2.0")))
+
+	modImplementation "maven.modrinth:sodium:${project.sodium_version}"
+
+	modApi "maven.modrinth:modmenu:${project.modmenu_version}"
+
+	include(implementation(annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-fabric:0.3.3")))
 }
 
 processResources {

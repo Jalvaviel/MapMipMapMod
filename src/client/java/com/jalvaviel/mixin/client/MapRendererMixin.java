@@ -1,43 +1,27 @@
 package com.jalvaviel.mixin.client;
 
+import com.jalvaviel.MapMipMapModClient;
 import net.minecraft.client.render.*;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.Util;
+import net.minecraft.component.type.MapIdComponent;
+import net.minecraft.item.map.MapState;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.util.function.Function;
-
-import static net.minecraft.client.render.RenderPhase.*;
-
-@Mixin(value = MapRenderer.MapTexture.class, priority = 1200)
+@Mixin(value = MapRenderer.class, priority = 1200)
 public abstract class MapRendererMixin {
     /**
-     * Mipmap shader for maps. Just a copy of the default one for maps with mipmaps enabled.
+     * This mixin ignores map updates (which happen very frequently) for locked maps, since they aren't supposed to
+     * be updated. It helps frame stability and removes lag spikes when loading lots of maps simultaneously.
+     * @param mapIdComponent the MapIdComponent object (unused).
+     * @param mapState the mapState object, which contains if the map is locked or not.
+     * @param ci callback which gets canceled if the map is locked, effectively removing a lot of pointless logic.
      */
-    @Unique
-    private static final Function<Identifier, RenderLayer> MAP_MIPMAP_LAYER = Util.memoize(texture -> RenderLayer.of("mapmipmap",
-            VertexFormats.POSITION_COLOR_TEXTURE_LIGHT,
-            VertexFormat.DrawMode.QUADS,
-            786432,
-            false,
-            true,
-            RenderLayer.MultiPhaseParameters.builder()
-                    .program(TEXT_PROGRAM)
-                    .texture(new RenderPhase.Texture(texture, false, true))
-                    .transparency(TRANSLUCENT_TRANSPARENCY)
-                    .lightmap(ENABLE_LIGHTMAP)
-                    .build(true)));
-
-    /**
-     * Applies the shader with the mipmap support when rendering the maps on the world.
-     *
-     * @param identifier the map atlas identifier.
-     */
-    @Redirect(method = "<init>", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/RenderLayer;getText(Lnet/minecraft/util/Identifier;)Lnet/minecraft/client/render/RenderLayer;"))
-    private RenderLayer redirectRenderLayerGetText(Identifier identifier) {
-        return MAP_MIPMAP_LAYER.apply(identifier);
+    @Inject(method = "updateTexture", at = @At("HEAD"), cancellable = true)
+    public void setNeedsUpdate(MapIdComponent mapIdComponent, MapState mapState, CallbackInfo ci){
+        if (mapState.locked && MapMipMapModClient.options().generalOptions.isLockedMapUpdates()) {
+            ci.cancel();
+        }
     }
 }

@@ -1,29 +1,50 @@
 package com.jalvaviel;
 
+import com.jalvaviel.config.MmmmGameOptions;
 import net.fabricmc.api.ClientModInitializer;
-import net.minecraft.client.MinecraftClient;
-import org.lwjgl.opengl.GL11;
-
-import java.util.Map;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class MapMipMapModClient implements ClientModInitializer {
+	public static final Logger LOG = LogManager.getLogger("MapMipMapMod");
+
+	private static MmmmGameOptions CONFIG;
 	public static boolean OUTDATED_DRIVER = false;
 	public static int MAP_SIZE = 128;
-	private static final Map<Integer,Integer> MIPMAP_TO_ATLAS = Map.of(0,4096,1,2048,2,2048,3,1024,4,1024,5,1024);
-	public static int ATLAS_SIZE;
-	public static int MAPS_PER_ATLAS;
+
+	/**
+	 * Loads the config file when the client initializes.
+	 */
 	@Override
 	public void onInitializeClient() {
-		// This entrypoint is suitable for setting up client-specific logic, such as rendering.
+		CONFIG = loadConfig();
 	}
 
 	/**
-	 * Checks if the atlas size can and needs to be updated.
+	 * Getter for the options.
+	 * @return the MapMipMapMod options running instance.
 	 */
-	public static void updateAtlasSize() {
-		int mipmapLevel = OUTDATED_DRIVER ? 0 : MinecraftClient.getInstance().options.getMipmapLevels().getValue();
-		ATLAS_SIZE = MIPMAP_TO_ATLAS.getOrDefault(mipmapLevel, 1024);
-		MAPS_PER_ATLAS = (ATLAS_SIZE / MAP_SIZE) * (ATLAS_SIZE / MAP_SIZE);
-		MinecraftClient.getInstance().gameRenderer.getMapRenderer().clearStateTextures(); //getMapTextureManager().clear();
+	public static MmmmGameOptions options() {
+		if (CONFIG == null) {
+			throw new IllegalStateException("Config not yet available.");
+		} else {
+			return CONFIG;
+		}
+	}
+
+	/**
+	 * Loads the MapMipMapMod config file.
+	 * @return the MapMipMapMod options from the config file.
+	 */
+	private static MmmmGameOptions loadConfig() {
+		try {
+			return MmmmGameOptions.loadFromDisk();
+		} catch (Exception e) {
+			LOG.error("Failed to load configuration file", e);
+			LOG.error("Using default configuration file in read-only mode");
+			MmmmGameOptions config = MmmmGameOptions.defaults();
+			config.setReadOnly();
+			return config;
+		}
 	}
 }

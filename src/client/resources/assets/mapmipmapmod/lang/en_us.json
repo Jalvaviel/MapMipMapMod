@@ -1,0 +1,10 @@
+{
+  "tab.mapmipmapmod.general": "MapMipMapMod",
+  "entry.mapmipmapmod.auto": "Auto",
+  "entry.mapmipmapmod.map_mipmap_levels": "Map mipmap levels",
+  "tooltip.mapmipmapmod.map_mipmap_levels": "Controls the levels of mipmaps to be used for maps.\n\"0\" disables the mipmaps for maps (Vanilla).\n\"8\" maxes out the levels (1 pixel texture at minimum resolution)\n\"Auto\" selects the same levels as in the Minecraft config.",
+  "entry.mapmipmapmod.atlas_size": "Atlas size",
+  "tooltip.mapmipmapmod.atlas_size": "The maximum maps for the atlases images.\nLower values might not bring the best performance, whereas higher values might cause lag and render instability.\n\"1\" Disables atlases (Vanilla).\n\"Auto\" selects an adequate size depending on the selected mipmap levels.",
+  "entry.mapmipmapmod.locked_map_updates": "Disable locked map updates",
+  "tooltip.mapmipmapmod.locked_map_updates": "When enabled, locked maps won't try to update their texture.\nWhen disabled, they'll follow their vanilla behaviour (May cause lag spikes with big atlases)."
+}

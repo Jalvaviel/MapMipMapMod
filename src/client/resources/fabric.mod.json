@@ -1,7 +1,7 @@
 {
 	"schemaVersion": 1,
 	"id": "mapmipmapmod",
-	"version": "${version}",
+	"version": "1.2.0",
 	"name": "MapMipMapMod",
 	"description": "A Minecraft Mod that fixes the mipmaps for map textures.",
 	"authors": [
@@ -9,32 +9,40 @@
 	],
 	"contact": {
 		"homepage": "https://modrinth.com/mod/mapmipmapmod",
-		"sources": "https://github.com/Jalvaviel/MapMipMapMod"
+		"sources": "https://github.com/Jalvaviel/MapMipMapMod",
+		"issues": "https://github.com/Jalvaviel/MapMipMapMod/issues"
 	},
-	"license": "MIT",
+	"license": "CCO-1.0",
 	"icon": "assets/mapmipmapmod/icon.png",
-	"environment": "*",
+	"environment": "client",
 	"entrypoints": {
-		"main": [
-			"com.jalvaviel.MapMipMapMod"
-		],
 		"client": [
 			"com.jalvaviel.MapMipMapModClient"
+		],
+		"modmenu": [
+			"com.jalvaviel.config.modmenu.MmmmModMenuIntegration"
 		]
 	},
 	"mixins": [
-		"mapmipmapmod.mixins.json",
+		{
+			"config": "mapmipmapmod.immediatelyfast.mixins.json",
+			"environment": "client"
+		},
 		{
 			"config": "mapmipmapmod.client.mixins.json",
+			"environment": "client"
+		},
+		{
+			"config": "mapmipmapmod.sodium.mixins.json",
 			"environment": "client"
 		}
 	],
 	"depends": {
-		"fabricloader": ">=0.16.9",
-		"minecraft": ">=1.21 <=1.21.1",
+		"fabricloader": ">=0.16.14",
+		"minecraft": "<=1.21.1",
 		"java": ">=21",
 		"fabric-api": "*",
-		"immediatelyfast": ">=1.3.3"
+		"immediatelyfast": "*"
 	},
 	"suggests": {
 		"another-mod": "*"

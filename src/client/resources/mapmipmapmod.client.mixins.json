@@ -1,19 +1,14 @@
 {
-	"required": true,
-	"package": "com.jalvaviel.mixin.client",
-	"compatibilityLevel": "JAVA_21",
-	"client": [
-		"MapRendererMixin",
-		"MapRendererMixinSquared",
-		"MapTextureManagerMixin",
-		"MapTextureMixinSquared",
-		"MinecraftClientAtlasSizeMixin",
-		"ReloadMipmapsMixin"
-	],
-	"injectors": {
-		"defaultRequire": 1
-	},
-	"mixins": [
-		"MapAtlasTextureMixin"
-	]
+  "required": true,
+  "package": "com.jalvaviel.mixin.client",
+  "compatibilityLevel": "JAVA_21",
+  "client": [
+    "MapRendererMixin",
+    "MapTextureManagerMixin",
+    "MinecraftClientAtlasSizeMixin",
+    "VideoOptionsScreenMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+	}
 }

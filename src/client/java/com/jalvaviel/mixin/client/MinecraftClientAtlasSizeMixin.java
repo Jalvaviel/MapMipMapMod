@@ -1,6 +1,5 @@
 package com.jalvaviel.mixin.client;
 
-import com.jalvaviel.MapMipMapMod;
 import net.minecraft.client.MinecraftClient;
 import org.lwjgl.opengl.GL11;
 import org.spongepowered.asm.mixin.Mixin;
@@ -23,10 +22,9 @@ public class MinecraftClientAtlasSizeMixin {
         int majorVersion = Integer.parseInt(openGlVersion.split("\\.")[0]);
         if (majorVersion < 3) {
             OUTDATED_DRIVER = true;
-            MapMipMapMod.LOGGER.error("OpenGL version " + openGlVersion + " does not support mipmap generation (>= v3.0).");
-            MapMipMapMod.LOGGER.error("Consider updating your graphics card drivers if possible.");
-            MapMipMapMod.LOGGER.error("Disabling MapMipMapMod...");
+            LOG.error("OpenGL version {} does not support native mipmap generation (>= v3.0).", openGlVersion);
+            LOG.error("Consider updating your graphics card drivers if possible.");
+            LOG.error("Disabling mipmaps for maps...");
         }
-        updateAtlasSize();
     }
 }
