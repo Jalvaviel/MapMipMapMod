@@ -28,7 +28,7 @@ public class MapTextureMixinSquared {
      * This is the squared mixin that prepares the atlas textures to get mipmapped. It uploads the atlas texture to the graphics library,
      * to be rendered on screen later. The last line is a direct call to OpenGl to generate the mipmaps with the GPU.
      *
-     * Stupid fact: Minecraft calculates all of the native supported mipmaps (block textures, entity textures, etc) with the CPU (manually).
+     * Stupid fact: Minecraft calculates all the native supported mipmaps (block textures, entity textures, etc.) with the CPU (manually).
      * This makes the default implementation very inefficient, but since they're only generated when the game starts or when the
      * mipmaps are updated on the menu options, it isn't as noticeable.
      * @param ci the callback of the method (unused).
