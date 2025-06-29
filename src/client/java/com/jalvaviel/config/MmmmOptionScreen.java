@@ -36,7 +36,7 @@ public class MmmmOptionScreen extends GameOptionsScreen {
      */
     protected void init() {
         // Map Mipmap Levels Option
-        OptionListWidget list = this.addDrawableChild(new OptionListWidget(this.client, this.width, this.height - 64, 32, 25));
+        OptionListWidget list = this.addDrawableChild(new OptionListWidget(this.client, this.width, this.height, 32, this.height - 32, 25));
         SimpleOption<Integer> mapmipmapLevels = new SimpleOption<>(
                 "entry.mapmipmapmod.map_mipmap_levels",
                 SimpleOption.constantTooltip(Text.translatable("tooltip.mapmipmapmod.map_mipmap_levels")),
