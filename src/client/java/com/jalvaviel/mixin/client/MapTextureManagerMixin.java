@@ -1,6 +1,7 @@
 package com.jalvaviel.mixin.client;
 
 import com.jalvaviel.MapMipMapModClient;
+import com.jalvaviel.config.enums.MapUpdates;
 import net.minecraft.client.texture.MapTextureManager;
 import net.minecraft.component.type.MapIdComponent;
 import net.minecraft.item.map.MapState;
@@ -16,11 +17,12 @@ public class MapTextureManagerMixin {
      * be updated. It helps frame stability and removes lag spikes when loading lots of maps simultaneously.
      * @param mapIdComponent the MapIdComponent object (unused).
      * @param mapState the mapState object, which contains if the map is locked or not.
-     * @param ci callback which gets cancelled if the map is locked, effectively removing a lot of pointless logic.
+     * @param ci callback which gets canceled if the map is locked, effectively removing a lot of pointless logic.
      */
     @Inject(method = "setNeedsUpdate", at = @At("HEAD"), cancellable = true)
     public void setNeedsUpdate(MapIdComponent mapIdComponent, MapState mapState, CallbackInfo ci){
-        if (mapState.locked && MapMipMapModClient.options().generalOptions.isLockedMapUpdates()) {
+        if ((mapState.locked && MapMipMapModClient.options().generalOptions.getMapUpdates() == MapUpdates.ONLY_UNLOCKED)
+                || MapMipMapModClient.options().generalOptions.getMapUpdates() == MapUpdates.NONE) {
             ci.cancel();
         }
     }

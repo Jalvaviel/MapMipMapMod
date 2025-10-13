@@ -3,8 +3,11 @@ package com.jalvaviel.config;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.jalvaviel.config.enums.InvisibleFrames;
+import com.jalvaviel.config.enums.MapUpdates;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.text.Text;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
@@ -18,11 +21,18 @@ import static com.jalvaviel.MapMipMapModClient.*;
 
 /**
  * <h1>MmmmGameOptions class</h1>
- * It has all the File IO to save and load from a json file, as well as a GeneralOptions object to better organise all the config options in case they get expanded.
+ * It has all the File IO to save and load from a json file, as well as a GeneralOptions object to better organize all the config options in case they get expanded.
  * Only a single instance should be active at any moment, and should be accessible via the mod's entrypoint.
  */
 public class MmmmGameOptions {
     private static final String DEFAULT_FILE_NAME = "mapmipmapmod-options.json";
+    public static final Text ONLY_UNLOCKED_MAP_UPDATES_TOOLTIP = Text.translatable("tooltip.mapmipmapmod.map_updates_only_unlocked");
+    public static final Text ALL_MAP_UPDATES_TOOLTIP = Text.translatable("tooltip.mapmipmapmod.map_updates_all");
+    public static final Text NONE_MAP_UPDATES_TOOLTIP = Text.translatable("tooltip.mapmipmapmod.map_updates_none");
+
+    public static final Text DEFAULT_INVISIBLE_FRAMES_TOOLTIP = Text.translatable("tooltip.mapmipmapmod.invisible_frames_default");
+    public static final Text ALL_INVISIBLE_FRAMES_TOOLTIP = Text.translatable("tooltip.mapmipmapmod.invisible_frames_all");
+    public static final Text ONLY_MAPS_INVISIBLE_FRAMES_TOOLTIP = Text.translatable("tooltip.mapmipmapmod.invisible_frames_only_maps");
 
     public final GeneralOptions generalOptions = new GeneralOptions();
 
@@ -130,7 +140,9 @@ public class MmmmGameOptions {
     public static class GeneralOptions {
         private int mapmipmapLevels = -1;
         private int atlasSize = 0;
-        private boolean lockedMapUpdates = true;
+        private int depthBias = 1;
+        private InvisibleFrames invisibleFrames = InvisibleFrames.DEFAULT;
+        private MapUpdates mapUpdates = MapUpdates.ONLY_UNLOCKED;
         public GeneralOptions() {}
 
         // Mipmap levels with defaults
@@ -153,10 +165,6 @@ public class MmmmGameOptions {
             return this.atlasSize;
         }
 
-        public boolean isLockedMapUpdates() {
-            return this.lockedMapUpdates;
-        }
-
         public void setMapmipmapLevels(int mapmipmapLevels) {
             this.mapmipmapLevels = mapmipmapLevels;
         }
@@ -165,8 +173,17 @@ public class MmmmGameOptions {
             this.atlasSize = atlasSize;
         }
 
-        public void setLockedMapUpdates(boolean lockedMapUpdates) {
-            this.lockedMapUpdates = lockedMapUpdates;
-        }
+        public void setDepthBias(int depthBias) { this.depthBias = depthBias; }
+
+        public int getDepthBias() { return this.depthBias; }
+
+        public InvisibleFrames getInvisibleFrames() { return this.invisibleFrames; }
+
+        public void setInvisibleFrames(InvisibleFrames invisibleFrames) { this.invisibleFrames = invisibleFrames; }
+
+        public MapUpdates getMapUpdates() { return this.mapUpdates; }
+
+        public void setMapUpdates(MapUpdates mapUpdates) { this.mapUpdates = mapUpdates; }
+
     }
 }

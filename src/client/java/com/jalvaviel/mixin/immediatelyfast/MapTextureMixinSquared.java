@@ -29,6 +29,8 @@ public class MapTextureMixinSquared {
     )
     @Inject(method = "@MixinSquared:Handler", at = @At(value = "FIELD", target = "Lnet/minecraft/client/texture/MapTextureManager$MapTexture;needsUpdate:Z"))
     public void onUpdateAtlasTexture(CallbackInfo ci) {
-        if(!OUTDATED_DRIVER)GL30.glGenerateMipmap(GL30.GL_TEXTURE_2D);
+        if(!OUTDATED_DRIVER) {
+            GL30.glGenerateMipmap(GL30.GL_TEXTURE_2D);
+        }
     }
 }
