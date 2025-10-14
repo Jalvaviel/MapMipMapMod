@@ -2,15 +2,9 @@ package com.jalvaviel.mixin.immediatelyfast;
 
 import com.jalvaviel.MapMipMapModClient;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
-import com.mojang.blaze3d.systems.GpuDevice;
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.textures.FilterMode;
-import com.mojang.blaze3d.textures.TextureFormat;
-import net.minecraft.client.texture.NativeImage;
+import net.minecraft.client.texture.NativeImageBackedTexture;
 import net.raphimc.immediatelyfast.feature.map_atlas_generation.MapAtlasTexture;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import static com.jalvaviel.MapMipMapModClient.MAP_SIZE;
 
@@ -23,18 +17,27 @@ import static com.jalvaviel.MapMipMapModClient.MAP_SIZE;
 @Mixin(MapAtlasTexture.class)
 public class MapAtlasTextureMixin {
 
-    @ModifyExpressionValue(method="<init>", at= @At(value = "CONSTANT", args = "intValue=4096"), remap = false)
+    @ModifyExpressionValue(method="<init>", at= @At(value = "FIELD", target = "Lnet/raphimc/immediatelyfast/feature/map_atlas_generation/MapAtlasTexture;ATLAS_SIZE:I"), remap = false)
     private int setSizeMapAtlasTexture(int original) {
         return MapMipMapModClient.options().generalOptions.getAtlasSize();
     }
-    @ModifyExpressionValue(method="getNextMapLocation", at= @At(value = "CONSTANT", args = "intValue=1024"), remap = false)
+
+    /*
+    @ModifyExpressionValue(method="getNextMapLocation", at= @At(value = "FIELD", target = "Lnet/raphimc/immediatelyfast/feature/map_atlas_generation/MapAtlasTexture;ATLAS_SIZE:I"), remap = false)
     private int setSizeGetNextMapLocation(int original) {
         int literalAtlasSize = MapMipMapModClient.options().generalOptions.getAtlasSize() / MAP_SIZE;
         return literalAtlasSize*literalAtlasSize;
     }
+     */
 
-    @ModifyExpressionValue(method="getNextMapLocation", at= @At(value = "CONSTANT", args = "intValue=32"), remap = false)
+    @ModifyExpressionValue(method="getNextMapLocation", at= @At(value = "FIELD", target = "Lnet/raphimc/immediatelyfast/feature/map_atlas_generation/MapAtlasTexture;MAPS_PER_ATLAS:I"), remap = false)
+    private int setMapsPerAtlas(int original) {
+        int atlasSize = MapMipMapModClient.options().generalOptions.getAtlasSize();
+        return atlasSize / 128 * (atlasSize / 128);
+    }
+
+    @ModifyExpressionValue(method="getNextMapLocation", at= @At(value = "FIELD", target = "Lnet/raphimc/immediatelyfast/feature/map_atlas_generation/MapAtlasTexture;ATLAS_SIZE:I"), remap = false)
     private int setOffsetGetNextMapLocation(int original) {
-        return MapMipMapModClient.options().generalOptions.getAtlasSize() / MAP_SIZE;
+        return MapMipMapModClient.options().generalOptions.getAtlasSize();
     }
 }

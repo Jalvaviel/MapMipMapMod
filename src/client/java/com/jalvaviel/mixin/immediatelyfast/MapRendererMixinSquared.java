@@ -19,8 +19,8 @@ public abstract class MapRendererMixinSquared {
      * @return the atlas size in the config.
      */
     @TargetHandler(mixin = "net.raphimc.immediatelyfast.injection.mixins.map_atlas_generation.MixinMapRenderer", name = "drawAtlasTexture")
-    @ModifyExpressionValue(method = "@MixinSquared:Handler", at = @At(value = "CONSTANT", args = "floatValue=4096.0F")) //
-    public float onDrawAtlasTexture(float original){
+    @ModifyExpressionValue(method = "@MixinSquared:Handler", at = @At(value = "FIELD", target = "Lnet/raphimc/immediatelyfast/feature/map_atlas_generation/MapAtlasTexture;ATLAS_SIZE:I"))
+    public int onDrawAtlasTexture(int original){
         return MapMipMapModClient.options().generalOptions.getAtlasSize();
     }
 }
