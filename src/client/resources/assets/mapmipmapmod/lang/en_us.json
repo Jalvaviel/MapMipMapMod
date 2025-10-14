@@ -5,6 +5,20 @@
   "tooltip.mapmipmapmod.map_mipmap_levels": "Controls the levels of mipmaps to be used for maps.\n\"0\" disables the mipmaps for maps (Vanilla).\n\"8\" maxes out the levels (1 pixel texture at minimum resolution)\n\"Auto\" selects the same levels as in the Minecraft config.",
   "entry.mapmipmapmod.atlas_size": "Atlas size",
   "tooltip.mapmipmapmod.atlas_size": "The maximum maps for the atlases images.\nLower values might not bring the best performance, whereas higher values might cause lag and render instability.\n\"1\" Disables atlases (Vanilla).\n\"Auto\" selects an adequate size depending on the selected mipmap levels.",
-  "entry.mapmipmapmod.locked_map_updates": "Disable locked map updates",
-  "tooltip.mapmipmapmod.locked_map_updates": "When enabled, locked maps won't try to update their texture.\nWhen disabled, they'll follow their vanilla behaviour (May cause lag spikes with big atlases)."
+  "entry.mapmipmapmod.map_updates": "Map updates",
+  "entry.mapmipmapmod.map_updates_only_unlocked": "Only unlocked",
+  "tooltip.mapmipmapmod.map_updates_only_unlocked": "Only enables updates for unlocked maps. locked maps won't try to update their contents. Recommended option.",
+  "entry.mapmipmapmod.map_updates_all": "All",
+  "tooltip.mapmipmapmod.map_updates_all": "Uses default vanilla behaviour. Might cause lag and render instability.",
+  "entry.mapmipmapmod.map_updates_none": "None",
+  "tooltip.mapmipmapmod.map_updates_none": "Disables updates for locked and unlocked maps. This option is not recommended if the map contents are changing.",
+  "entry.mapmipmapmod.depth_bias": "Depth bias",
+  "tooltip.mapmipmapmod.depth_bias": "Controls the level of depth where the maps should be rendered over other textures.\nThis feature helps with Z-fighting when maps are in item frames and viewed from extreme distances.\n\"0\" No depth bias (Vanilla).\n\"8\" Maxes out the bias (May cause visual layering).",
+  "entry.mapmipmapmod.invisible_frames": "Invisible item frames",
+  "entry.mapmipmapmod.invisible_frames_default": "Default",
+  "tooltip.mapmipmapmod.invisible_frames_only_maps": "Turns item frames invisible if there are maps displayed in them. Useful for transparent maps.",
+  "entry.mapmipmapmod.invisible_frames_only_maps": "Only maps",
+  "tooltip.mapmipmapmod.invisible_frames_default": "Uses default vanilla behaviour.",
+  "entry.mapmipmapmod.invisible_frames_all": "All",
+  "tooltip.mapmipmapmod.invisible_frames_all": "Turns all item frames invisible. Their contents are displayed normally."
 }
