@@ -3,6 +3,7 @@
   "package": "com.jalvaviel.mixin.client",
   "compatibilityLevel": "JAVA_21",
   "client": [
+    "ItemFrameEntityRendererMixin",
     "MapRendererMixin",
     "MapTextureManagerMixin",
     "MinecraftClientAtlasSizeMixin",

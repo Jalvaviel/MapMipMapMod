@@ -1,10 +1,13 @@
 package com.jalvaviel.mixin.client;
 
+import com.jalvaviel.MapMipMapModClient;
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gl.RenderPipelines;
 import net.minecraft.client.render.*;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.TriState;
 import net.minecraft.util.Util;
+import org.joml.Matrix4fStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -16,6 +19,20 @@ import static net.minecraft.client.render.RenderPhase.*;
 
 @Mixin(value = MapRenderer.class, priority = 1200)
 public abstract class MapRendererMixin {
+
+    /**
+     * New layering for the shader below to avoid Z fighting with item frame texture.
+     */
+    @Unique
+    private static final Layering VIEW_OFFSET_Z_LAYERING_MAPS = new Layering("view_offset_z_layering", () -> {
+        Matrix4fStack matrix4fStack = RenderSystem.getModelViewStack();
+        matrix4fStack.pushMatrix();
+        RenderSystem.getProjectionType().apply(matrix4fStack, MapMipMapModClient.options().generalOptions.getDepthBias());
+    }, () -> {
+        Matrix4fStack matrix4fStack = RenderSystem.getModelViewStack();
+        matrix4fStack.popMatrix();
+    });
+
     /**
      * Mipmap shader for maps. Just a copy of the default one for maps with mipmaps enabled.
      */
@@ -27,11 +44,10 @@ public abstract class MapRendererMixin {
                     true,
                     RenderPipelines.RENDERTYPE_TEXT,
                     RenderLayer.MultiPhaseParameters.builder()
+                            .layering(VIEW_OFFSET_Z_LAYERING_MAPS)
                             .texture(new RenderPhase.Texture(texture, TriState.FALSE, true))
                             .lightmap(ENABLE_LIGHTMAP)
                             .build(true)));
-    //TEXT = Util.memoize((texture) ->
-    //of("text", 786432, false, false, RenderPipelines.RENDERTYPE_TEXT, RenderLayer.MultiPhaseParameters.builder().texture(new RenderPhase.Texture(texture, false)).lightmap(ENABLE_LIGHTMAP).build(false)));
 
     /**
      * Applies the shader with the mipmap support when rendering the maps on the world.
