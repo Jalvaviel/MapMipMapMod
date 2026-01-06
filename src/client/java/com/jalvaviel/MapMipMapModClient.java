@@ -6,7 +6,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class MapMipMapModClient implements ClientModInitializer {
-	public static final Logger LOG = LogManager.getLogger("MapMipMapMod");
+	public static final Logger LOG = LogManager.getLogger("mapmipmapmod");
 
 	private static MmmmGameOptions CONFIG;
 	public static boolean OUTDATED_DRIVER = false;
@@ -17,7 +17,7 @@ public class MapMipMapModClient implements ClientModInitializer {
 	 */
 	@Override
 	public void onInitializeClient() {
-		CONFIG = loadConfig();
+		//CONFIG = loadConfig();
 	}
 
 	/**
@@ -26,11 +26,11 @@ public class MapMipMapModClient implements ClientModInitializer {
 	 */
 	public static MmmmGameOptions options() {
 		if (CONFIG == null) {
-			throw new IllegalStateException("Config not yet available.");
-		} else {
-			return CONFIG;
+			CONFIG = loadConfig();
+            //throw new IllegalStateException("Config not yet available.");
 		}
-	}
+        return CONFIG;
+    }
 
 	/**
 	 * Loads the MapMipMapMod config file.

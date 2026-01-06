@@ -7,7 +7,6 @@ import com.jalvaviel.config.enums.InvisibleFrames;
 import com.jalvaviel.config.enums.MapUpdates;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.text.Text;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
@@ -26,13 +25,6 @@ import static com.jalvaviel.MapMipMapModClient.*;
  */
 public class MmmmGameOptions {
     private static final String DEFAULT_FILE_NAME = "mapmipmapmod-options.json";
-    public static final Text ONLY_UNLOCKED_MAP_UPDATES_TOOLTIP = Text.translatable("tooltip.mapmipmapmod.map_updates_only_unlocked");
-    public static final Text ALL_MAP_UPDATES_TOOLTIP = Text.translatable("tooltip.mapmipmapmod.map_updates_all");
-    public static final Text NONE_MAP_UPDATES_TOOLTIP = Text.translatable("tooltip.mapmipmapmod.map_updates_none");
-
-    public static final Text DEFAULT_INVISIBLE_FRAMES_TOOLTIP = Text.translatable("tooltip.mapmipmapmod.invisible_frames_default");
-    public static final Text ALL_INVISIBLE_FRAMES_TOOLTIP = Text.translatable("tooltip.mapmipmapmod.invisible_frames_all");
-    public static final Text ONLY_MAPS_INVISIBLE_FRAMES_TOOLTIP = Text.translatable("tooltip.mapmipmapmod.invisible_frames_only_maps");
 
     public final GeneralOptions generalOptions = new GeneralOptions();
 
@@ -88,7 +80,7 @@ public class MmmmGameOptions {
     /**
      * Writes the config file from memory using GSON. It gets called using the save() method in OptionStorage.
      * @param config The MmmmGameOptions instance to be saved.
-     * @throws IOException
+     * @throws IOException When the file is read-only or not a directory
      * @see OptionStorage
      */
     public static void writeToDisk(@NotNull MmmmGameOptions config) throws IOException {
@@ -109,10 +101,9 @@ public class MmmmGameOptions {
 
     /**
      * Just a copy-paste from Sodium's SodiumGameOptions to change the temporary file to a definitive one.
-     * @param text The json string provided by GSON.
+     * @param text The JSON string provided by GSON.
      * @param path The path to save it to.
-     * @throws IOException
-     * @see net.caffeinemc.mods.sodium.client.gui.SodiumGameOptions
+     * @throws IOException When the file can't be saved.
      */
     private static void writeTextRobustly(String text, @NotNull Path path) throws IOException {
         Path tempPath = path.resolveSibling(path.getFileName() + ".tmp");

@@ -33,10 +33,11 @@ public abstract class VideoOptionsScreenMixin extends GameOptionsScreen {
      */
     @Inject(method = "addOptions", at = @At("TAIL"))
     protected void addOptions(CallbackInfo ci) {
-        ButtonWidget buttonWidget = ButtonWidget.builder(Text.translatable("tab.mapmipmapmod.general"), buttonWidget1 ->
+        ButtonWidget buttonWidget = ButtonWidget.builder(Text.translatable("settinggroup.mapmipmapmod.general"), buttonWidget1 ->
             MinecraftClient.getInstance().setScreen(new MmmmOptionScreen((VideoOptionsScreen)(Object)this,gameOptions))
-        )
-                .build();
+        ).width(310).build();
+        assert this.body != null;
+        this.body.addHeader(Text.translatable("tab.mapmipmapmod.general"));
         this.body.addWidgetEntry(buttonWidget,null);
     }
 }

@@ -1,5 +1,6 @@
 {
   "tab.mapmipmapmod.general": "MapMipMapMod",
+  "settinggroup.mapmipmapmod.general": "General",
   "entry.mapmipmapmod.auto": "Auto",
   "entry.mapmipmapmod.map_mipmap_levels": "Map mipmap levels",
   "tooltip.mapmipmapmod.map_mipmap_levels": "Controls the levels of mipmaps to be used for maps.\n\"0\" disables the mipmaps for maps (Vanilla).\n\"8\" maxes out the levels (1 pixel texture at minimum resolution)\n\"Auto\" selects the same levels as in the Minecraft config.",

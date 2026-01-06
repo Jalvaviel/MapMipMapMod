@@ -21,6 +21,9 @@
 		],
 		"modmenu": [
 			"com.jalvaviel.config.modmenu.MmmmModMenuIntegration"
+		],
+		"sodium:config_api_user": [
+			"com.jalvaviel.config.sodium.MmmmSodiumConfigBuilder"
 		]
 	},
 	"mixins": [
@@ -31,15 +34,11 @@
 		{
 			"config": "mapmipmapmod.client.mixins.json",
 			"environment": "client"
-		},
-		{
-			"config": "mapmipmapmod.sodium.mixins.json",
-			"environment": "client"
 		}
 	],
 	"depends": {
 		"fabricloader": ">=0.16.14",
-		"minecraft": ">=1.21.9 <=1.21.10",
+		"minecraft": ">=1.21.9 <=1.21.11",
 		"java": ">=21",
 		"fabric-api": "*",
 		"immediatelyfast": ">=1.10.0"

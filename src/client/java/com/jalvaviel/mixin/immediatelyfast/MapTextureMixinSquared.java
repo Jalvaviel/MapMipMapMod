@@ -7,6 +7,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
 import static com.jalvaviel.MapMipMapModClient.OUTDATED_DRIVER;
 
 
@@ -24,7 +25,7 @@ public class MapTextureMixinSquared {
      * @param ci the callback of the method (unused).
      */
     @TargetHandler(
-            mixin = "net.raphimc.immediatelyfast.injection.mixins.map_atlas_generation.MixinMapTextureManager_MapTexture",
+            mixin = "net.raphimc.immediatelyfast.injection.mixins.map_atlas_generation.MixinMapTextureManager_MapInstance",
             name = "updateAtlasTexture"
     )
     @Inject(method = "@MixinSquared:Handler", at = @At(value = "FIELD", target = "Lnet/minecraft/client/texture/MapTextureManager$MapTexture;needsUpdate:Z"))

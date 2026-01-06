@@ -7,7 +7,6 @@ import com.mojang.serialization.Codec;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.option.GameOptionsScreen;
-import net.minecraft.client.gui.tooltip.Tooltip;
 import net.minecraft.client.option.GameOptions;
 import net.minecraft.client.option.SimpleOption;
 import net.minecraft.client.texture.MapTextureManager;
@@ -16,7 +15,6 @@ import net.minecraft.text.Text;
 import java.util.Arrays;
 
 import static com.jalvaviel.MapMipMapModClient.MAP_SIZE;
-import static com.jalvaviel.config.MmmmGameOptions.*;
 
 /** <h1>MmmmOptionScreen class</h1>
  * The option screen for MapMipMapMod without sodium. It gets called when the MapMipMapMod button is pressed in the vanilla's VideoOptionsScreen
@@ -87,20 +85,13 @@ public class MmmmOptionScreen extends GameOptionsScreen {
                 },
                 new SimpleOption.ValidatingIntSliderCallbacks(0, 8, false),
                 mmmmOpts.getData().generalOptions.getDepthBias(),
-                (value) -> {
-                    mmmmOpts.getData().generalOptions.setDepthBias(value);
-                });
+                (value) -> mmmmOpts.getData().generalOptions.setDepthBias(value));
 
         // Locked Map Updates Option
         SimpleOption<MapUpdates> lockedMapUpdates = new SimpleOption<>(
                 "entry.mapmipmapmod.map_updates",
-                value -> switch (value) {
-                    case MapUpdates.ALL -> Tooltip.of(ALL_MAP_UPDATES_TOOLTIP);
-                    case MapUpdates.ONLY_UNLOCKED -> Tooltip.of(ONLY_UNLOCKED_MAP_UPDATES_TOOLTIP);
-                    case MapUpdates.NONE -> Tooltip.of(NONE_MAP_UPDATES_TOOLTIP);
-                    default -> throw new IllegalStateException("Unexpected value: " + value);
-                },
-                SimpleOption.enumValueText(),
+                MapUpdates::getTooltip,
+                (optionText, value) -> value.getName(),
                 new SimpleOption.PotentialValuesBasedCallbacks<>(Arrays.asList(MapUpdates.values()), Codec.INT.xmap(MapUpdates::get, MapUpdates::getId)),
                 mmmmOpts.getData().generalOptions.getMapUpdates(),
                 (value) -> mmmmOpts.getData().generalOptions.setMapUpdates(value));
@@ -109,19 +100,15 @@ public class MmmmOptionScreen extends GameOptionsScreen {
         // Invisible Item Frames Option
         SimpleOption<InvisibleFrames> invisibleFrames = new SimpleOption<>(
                 "entry.mapmipmapmod.invisible_frames",
-                value -> switch (value) {
-                    case InvisibleFrames.DEFAULT -> Tooltip.of(DEFAULT_INVISIBLE_FRAMES_TOOLTIP);
-                    case InvisibleFrames.ONLY_MAPS -> Tooltip.of(ONLY_MAPS_INVISIBLE_FRAMES_TOOLTIP);
-                    case InvisibleFrames.ALL -> Tooltip.of(ALL_INVISIBLE_FRAMES_TOOLTIP);
-                    default -> throw new IllegalStateException("Unexpected value: " + value);
-                },
-                SimpleOption.enumValueText(),
+                InvisibleFrames::getTooltip,
+                (optionText, value) -> value.getName(),
                 new SimpleOption.PotentialValuesBasedCallbacks<>(Arrays.asList(InvisibleFrames.values()), Codec.INT.xmap(InvisibleFrames::get, InvisibleFrames::getId)),
                 mmmmOpts.getData().generalOptions.getInvisibleFrames(),
                 (value) -> mmmmOpts.getData().generalOptions.setInvisibleFrames(value));
 
 
         // Add all options to the screen body with full width
+        assert this.body != null;
         this.body.addSingleOptionEntry(mapmipmapLevels);
         this.body.addSingleOptionEntry(atlasSize);
         this.body.addSingleOptionEntry(depthBias);
