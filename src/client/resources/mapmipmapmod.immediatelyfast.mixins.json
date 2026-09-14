@@ -3,6 +3,7 @@
 	"package": "com.jalvaviel.mixin.immediatelyfast",
 	"compatibilityLevel": "JAVA_21",
 	"client": [
+		"DrawContextMixinSquared",
 		"MapRendererMixinSquared",
 		"MapTextureMixinSquared",
 		"MapAtlasTextureMixin"

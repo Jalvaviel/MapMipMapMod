@@ -51,7 +51,8 @@ dependencies {
 
 	modImplementation "maven.modrinth:sodium:${project.sodium_version}"
 
-	modImplementation "net.caffeinemc:sodium-fabric-api:${project.sodium_fabric_api}"
+	// Sodium already includes its matching API. Adding the older standalone API
+	// shadows the config interfaces and breaks compilation against Sodium 0.8.2.
 
 	modApi "com.terraformersmc:modmenu:${project.modmenu_version}"
 
