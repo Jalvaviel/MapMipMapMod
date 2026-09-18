@@ -51,8 +51,6 @@ dependencies {
 
 	modImplementation "maven.modrinth:sodium:${project.sodium_version}"
 
-	modImplementation "net.caffeinemc:sodium-fabric-api:${project.sodium_fabric_api}"
-
 	modApi "com.terraformersmc:modmenu:${project.modmenu_version}"
 
 	include(implementation(annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-fabric:0.3.3")))

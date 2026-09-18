@@ -1,13 +1,14 @@
 {
-	"required": true,
-	"package": "com.jalvaviel.mixin.immediatelyfast",
-	"compatibilityLevel": "JAVA_21",
-	"client": [
-		"MapRendererMixinSquared",
-		"MapTextureMixinSquared",
-		"MapAtlasTextureMixin"
-	],
-	"injectors": {
-		"defaultRequire": 1
+  "required": true,
+  "package": "com.jalvaviel.mixin.immediatelyfast",
+  "compatibilityLevel": "JAVA_21",
+  "client": [
+    "DrawContextMixinSquared",
+    "MapAtlasTextureMixin",
+    "MapRendererMixinSquared",
+    "MapTextureMixinSquared"
+  ],
+  "injectors": {
+    "defaultRequire": 1
 	}
 }

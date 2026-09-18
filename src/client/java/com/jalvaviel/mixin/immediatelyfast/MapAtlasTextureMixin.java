@@ -22,14 +22,6 @@ public class MapAtlasTextureMixin {
         return MapMipMapModClient.options().generalOptions.getAtlasSize();
     }
 
-    /*
-    @ModifyExpressionValue(method="getNextMapLocation", at= @At(value = "FIELD", target = "Lnet/raphimc/immediatelyfast/feature/map_atlas_generation/MapAtlasTexture;ATLAS_SIZE:I"), remap = false)
-    private int setSizeGetNextMapLocation(int original) {
-        int literalAtlasSize = MapMipMapModClient.options().generalOptions.getAtlasSize() / MAP_SIZE;
-        return literalAtlasSize*literalAtlasSize;
-    }
-     */
-
     @ModifyExpressionValue(method="getNextMapLocation", at= @At(value = "FIELD", target = "Lnet/raphimc/immediatelyfast/feature/map_atlas_generation/MapAtlasTexture;MAPS_PER_ATLAS:I"), remap = false)
     private int setMapsPerAtlas(int original) {
         int atlasSize = MapMipMapModClient.options().generalOptions.getAtlasSize();
