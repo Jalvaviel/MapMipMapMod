@@ -2,11 +2,9 @@ package com.jalvaviel.mixin.immediatelyfast;
 
 import com.jalvaviel.MapMipMapModClient;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
-import net.minecraft.client.texture.NativeImageBackedTexture;
 import net.raphimc.immediatelyfast.feature.map_atlas_generation.MapAtlasTexture;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import static com.jalvaviel.MapMipMapModClient.MAP_SIZE;
 
 /**
  * This mixin just overwrites all the instances of the static constant final on ImmediatelyFast for the right atlas size
