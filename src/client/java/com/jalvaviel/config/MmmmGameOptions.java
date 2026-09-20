@@ -6,7 +6,7 @@ import com.google.gson.GsonBuilder;
 import com.jalvaviel.config.enums.InvisibleFrames;
 import com.jalvaviel.config.enums.MapUpdates;
 import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.Minecraft;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
@@ -138,7 +138,7 @@ public class MmmmGameOptions {
 
         // Mipmap levels with defaults
         public int getMapmipmapLevels() {
-            return OUTDATED_DRIVER ? 0 : (this.mapmipmapLevels <= -1 ? MinecraftClient.getInstance().options.getMipmapLevels().getValue() : this.mapmipmapLevels);
+            return OUTDATED_DRIVER ? 0 : (this.mapmipmapLevels <= -1 ? Minecraft.getInstance().options.mipmapLevels().get() : this.mapmipmapLevels);
         }
 
         // Mipmap levels for "auto" display on sodium MmmmGameOptionsPages

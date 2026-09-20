@@ -1,23 +1,23 @@
 package com.jalvaviel.config.enums;
 
-import net.minecraft.client.gui.tooltip.Tooltip;
-import net.minecraft.text.Text;
-import net.minecraft.util.function.ValueLists;
+import net.minecraft.client.gui.components.Tooltip;
+import net.minecraft.network.chat.Component;
+import net.minecraft.util.ByIdMap;
 
 import java.util.function.IntFunction;
 
 public enum MapUpdates implements GuiText {
-    ALL(0, Text.translatable("entry.mapmipmapmod.map_updates_all"), Text.translatable("tooltip.mapmipmapmod.map_updates_all")),
-    ONLY_UNLOCKED(1, Text.translatable("entry.mapmipmapmod.map_updates_only_unlocked"), Text.translatable("tooltip.mapmipmapmod.map_updates_only_unlocked")),
-    NONE(2, Text.translatable("entry.mapmipmapmod.map_updates_none"), Text.translatable("tooltip.mapmipmapmod.map_updates_none"));
+    ALL(0, Component.translatable("entry.mapmipmapmod.map_updates_all"), Component.translatable("tooltip.mapmipmapmod.map_updates_all")),
+    ONLY_UNLOCKED(1, Component.translatable("entry.mapmipmapmod.map_updates_only_unlocked"), Component.translatable("tooltip.mapmipmapmod.map_updates_only_unlocked")),
+    NONE(2, Component.translatable("entry.mapmipmapmod.map_updates_none"), Component.translatable("tooltip.mapmipmapmod.map_updates_none"));
 
-    private static final IntFunction<MapUpdates> BY_ID = ValueLists.createIndexToValueFunction(MapUpdates::getId, values(), ValueLists.OutOfBoundsHandling.WRAP);
+    private static final IntFunction<MapUpdates> BY_ID = ByIdMap.continuous(MapUpdates::getId, values(), ByIdMap.OutOfBoundsStrategy.WRAP);
 
     private final int id;
-    private final Text name;
-    private final Text tooltip;
+    private final Component name;
+    private final Component tooltip;
 
-    MapUpdates(final int id, final Text name, final Text tooltip) {
+    MapUpdates(final int id, final Component name, final Component tooltip) {
         this.id = id;
         this.name = name;
         this.tooltip = tooltip;
@@ -33,17 +33,17 @@ public enum MapUpdates implements GuiText {
     }
 
     @Override
-    public Text getName() {
+    public Component getName() {
         return name;
     }
 
     @Override
-    public Text getTextTooltip() {
+    public Component getTextTooltip() {
         return tooltip;
     }
 
     @Override
     public Tooltip getTooltip() {
-        return Tooltip.of(tooltip);
+        return Tooltip.create(tooltip);
     }
 }

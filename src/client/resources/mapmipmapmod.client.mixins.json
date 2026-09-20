@@ -1,14 +1,14 @@
 {
   "required": true,
   "package": "com.jalvaviel.mixin.client",
-  "compatibilityLevel": "JAVA_21",
+  "compatibilityLevel": "JAVA_25",
   "client": [
-    "ItemFrameEntityRendererMixin",
+    "ItemFrameRendererMixin",
     "MapRendererMixin",
     "MapTextureManagerMixin",
-    "MinecraftClientAtlasSizeMixin",
-    "NativeImageBackedTextureMixin",
-    "VideoOptionsScreenMixin"
+    "MinecraftAtlasSizeMixin",
+    "DynamicTextureMixin",
+    "VideoSettingsScreenMixin"
   ],
   "injectors": {
     "defaultRequire": 1

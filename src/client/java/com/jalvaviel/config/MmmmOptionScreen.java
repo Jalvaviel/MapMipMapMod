@@ -2,15 +2,15 @@ package com.jalvaviel.config;
 
 import com.jalvaviel.config.enums.InvisibleFrames;
 import com.jalvaviel.config.enums.MapUpdates;
-import com.jalvaviel.mixin.client.VideoOptionsScreenMixin;
+import com.jalvaviel.mixin.client.VideoSettingsScreenMixin;
 import com.mojang.serialization.Codec;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.gui.screen.option.GameOptionsScreen;
-import net.minecraft.client.option.GameOptions;
-import net.minecraft.client.option.SimpleOption;
-import net.minecraft.client.texture.MapTextureManager;
-import net.minecraft.text.Text;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.gui.screens.options.OptionsSubScreen;
+import net.minecraft.client.Options;
+import net.minecraft.client.OptionInstance;
+import net.minecraft.client.resources.MapTextureManager;
+import net.minecraft.network.chat.Component;
 
 import java.util.Arrays;
 
@@ -18,9 +18,9 @@ import static com.jalvaviel.MapMipMapModClient.MAP_SIZE;
 
 /** <h1>MmmmOptionScreen class</h1>
  * The option screen for MapMipMapMod without sodium. It gets called when the MapMipMapMod button is pressed in the vanilla's VideoOptionsScreen
- * @see VideoOptionsScreenMixin
+ * @see VideoSettingsScreenMixin
  */
-public class MmmmOptionScreen extends GameOptionsScreen {
+public class MmmmOptionScreen extends OptionsSubScreen {
 
     private static final MmmmOptionsStorage mmmmOpts = new MmmmOptionsStorage();
 
@@ -29,91 +29,91 @@ public class MmmmOptionScreen extends GameOptionsScreen {
      * @param parent the parent screen (previous screen).
      * @param gameOptions the gameOptions with most of the vanilla config. (I don't know why it's mandatory for any GameOptionsScreen children when addOptions exist).
      */
-    public MmmmOptionScreen(Screen parent, GameOptions gameOptions) {
-        super(parent, gameOptions, Text.translatable("tab.mapmipmapmod.general"));
+    public MmmmOptionScreen(Screen parent, Options gameOptions) {
+        super(parent, gameOptions, Component.translatable("tab.mapmipmapmod.general"));
     }
 
     /**
      * Adds the options for MapMipMapMod using vanilla's SimpleOption builders.
-     * @see SimpleOption
+     * @see OptionInstance
      */
     @Override
     protected void addOptions() {
         // Map Mipmap Levels Option
-        SimpleOption<Integer> mapmipmapLevels = new SimpleOption<>(
+        OptionInstance<Integer> mapmipmapLevels = new OptionInstance<>(
                 "entry.mapmipmapmod.map_mipmap_levels",
-                SimpleOption.constantTooltip(Text.translatable("tooltip.mapmipmapmod.map_mipmap_levels")),
-                (optionText, value) -> {
-                    Text textValue = value <= -1 ?
-                        Text.translatable("entry.mapmipmapmod.auto") :
-                        Text.literal(Integer.toString(value));
-                    return Text.translatable("entry.mapmipmapmod.map_mipmap_levels").append(": "+textValue.getString());
+                OptionInstance.cachedConstantTooltip(Component.translatable("tooltip.mapmipmapmod.map_mipmap_levels")),
+                (_, value) -> {
+                    Component textValue = value <= -1 ?
+                        Component.translatable("entry.mapmipmapmod.auto") :
+                        Component.literal(Integer.toString(value));
+                    return Component.translatable("entry.mapmipmapmod.map_mipmap_levels").append(": "+textValue.getString());
                 },
-                new SimpleOption.ValidatingIntSliderCallbacks(-1, 8, false),
+                new OptionInstance.IntRange(-1, 8, false),
                 mmmmOpts.getData().generalOptions.getLiteralMapmipmapLevels(),
                 (value) -> {
                     mmmmOpts.getData().generalOptions.setMapmipmapLevels(value);
-                    MinecraftClient.getInstance().getMapTextureManager().clear();
+                    Minecraft.getInstance().getMapTextureManager().resetData();
                 });
 
         // Atlas Size Option
-        SimpleOption<Integer> atlasSize = new SimpleOption<>(
+        OptionInstance<Integer> atlasSize = new OptionInstance<>(
                 "entry.mapmipmapmod.atlas_size",
-                SimpleOption.constantTooltip(Text.translatable("tooltip.mapmipmapmod.atlas_size")),
-                (optionText, value) -> {
-                    Text textValue = value <= 0 ?
-                        Text.translatable("entry.mapmipmapmod.auto") :
-                        Text.literal(value + "x" + value + " (" + (value * MAP_SIZE) + "x" + (value * MAP_SIZE) + "px)");
-                    return Text.translatable("entry.mapmipmapmod.atlas_size").append(": "+textValue.getString());
+                OptionInstance.cachedConstantTooltip(Component.translatable("tooltip.mapmipmapmod.atlas_size")),
+                (_, value) -> {
+                    Component textValue = value <= 0 ?
+                        Component.translatable("entry.mapmipmapmod.auto") :
+                        Component.literal(value + "x" + value + " (" + (value * MAP_SIZE) + "x" + (value * MAP_SIZE) + "px)");
+                    return Component.translatable("entry.mapmipmapmod.atlas_size").append(": "+textValue.getString());
                 },
-                new SimpleOption.ValidatingIntSliderCallbacks(0, 32, false),
+                new OptionInstance.IntRange(0, 32, false),
                 mmmmOpts.getData().generalOptions.getLiteralAtlasSize(),
                 (value) -> {
                     mmmmOpts.getData().generalOptions.setAtlasSize(value);
-                    MinecraftClient.getInstance().getMapTextureManager().clear();
+                    Minecraft.getInstance().getMapTextureManager().resetData();
                 });
 
         // Depth Bias Option
-        SimpleOption<Integer> depthBias = new SimpleOption<>(
+        OptionInstance<Integer> depthBias = new OptionInstance<>(
                 "entry.mapmipmapmod.depth_bias",
-                SimpleOption.constantTooltip(Text.translatable("tooltip.mapmipmapmod.depth_bias")),
-                (optionText, value) -> {
-                    Text textValue = value <= -1 ?
-                            Text.translatable("entry.mapmipmapmod.auto") :
-                            Text.literal(Integer.toString(value));
-                    return Text.translatable("entry.mapmipmapmod.depth_bias").append(": "+textValue.getString());
+                OptionInstance.cachedConstantTooltip(Component.translatable("tooltip.mapmipmapmod.depth_bias")),
+                (_, value) -> {
+                    Component textValue = value <= -1 ?
+                            Component.translatable("entry.mapmipmapmod.auto") :
+                            Component.literal(Integer.toString(value));
+                    return Component.translatable("entry.mapmipmapmod.depth_bias").append(": "+textValue.getString());
                 },
-                new SimpleOption.ValidatingIntSliderCallbacks(0, 8, false),
+                new OptionInstance.IntRange(0, 8, false),
                 mmmmOpts.getData().generalOptions.getDepthBias(),
                 (value) -> mmmmOpts.getData().generalOptions.setDepthBias(value));
 
         // Locked Map Updates Option
-        SimpleOption<MapUpdates> lockedMapUpdates = new SimpleOption<>(
+        OptionInstance<MapUpdates> lockedMapUpdates = new OptionInstance<>(
                 "entry.mapmipmapmod.map_updates",
                 MapUpdates::getTooltip,
-                (optionText, value) -> value.getName(),
-                new SimpleOption.PotentialValuesBasedCallbacks<>(Arrays.asList(MapUpdates.values()), Codec.INT.xmap(MapUpdates::get, MapUpdates::getId)),
+                (_, value) -> value.getName(),
+                new OptionInstance.Enum<>(Arrays.asList(MapUpdates.values()), Codec.INT.xmap(MapUpdates::get, MapUpdates::getId)),
                 mmmmOpts.getData().generalOptions.getMapUpdates(),
                 (value) -> mmmmOpts.getData().generalOptions.setMapUpdates(value));
 
 
         // Invisible Item Frames Option
-        SimpleOption<InvisibleFrames> invisibleFrames = new SimpleOption<>(
+        OptionInstance<InvisibleFrames> invisibleFrames = new OptionInstance<>(
                 "entry.mapmipmapmod.invisible_frames",
                 InvisibleFrames::getTooltip,
-                (optionText, value) -> value.getName(),
-                new SimpleOption.PotentialValuesBasedCallbacks<>(Arrays.asList(InvisibleFrames.values()), Codec.INT.xmap(InvisibleFrames::get, InvisibleFrames::getId)),
+                (_, value) -> value.getName(),
+                new OptionInstance.Enum<>(Arrays.asList(InvisibleFrames.values()), Codec.INT.xmap(InvisibleFrames::get, InvisibleFrames::getId)),
                 mmmmOpts.getData().generalOptions.getInvisibleFrames(),
                 (value) -> mmmmOpts.getData().generalOptions.setInvisibleFrames(value));
 
 
         // Add all options to the screen body with full width
-        assert this.body != null;
-        this.body.addSingleOptionEntry(mapmipmapLevels);
-        this.body.addSingleOptionEntry(atlasSize);
-        this.body.addSingleOptionEntry(depthBias);
-        this.body.addSingleOptionEntry(lockedMapUpdates);
-        this.body.addSingleOptionEntry(invisibleFrames);
+        assert this.list != null;
+        this.list.addBig(mapmipmapLevels);
+        this.list.addBig(atlasSize);
+        this.list.addBig(depthBias);
+        this.list.addBig(lockedMapUpdates);
+        this.list.addBig(invisibleFrames);
 
     }
 
@@ -123,9 +123,9 @@ public class MmmmOptionScreen extends GameOptionsScreen {
      * @see MapTextureManager
      */
     @Override
-    public void close() {
+    public void onClose() {
         mmmmOpts.save();
-        MinecraftClient.getInstance().getMapTextureManager().clear();
-        super.close();
+        Minecraft.getInstance().getMapTextureManager().resetData();
+        super.onClose();
     }
 }

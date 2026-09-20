@@ -1,7 +1,7 @@
 package com.jalvaviel.mixin.immediatelyfast;
 
 import com.bawnorton.mixinsquared.TargetHandler;
-import net.minecraft.client.texture.MapTextureManager;
+import net.minecraft.client.resources.MapTextureManager;
 import org.lwjgl.opengl.GL30;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -12,7 +12,7 @@ import static com.jalvaviel.MapMipMapModClient.OUTDATED_DRIVER;
 
 
 @Mixin(
-        value = {MapTextureManager.MapTexture.class},
+        value = {MapTextureManager.MapInstance.class},
         priority = 1200
 )
 public class MapTextureMixinSquared {
@@ -28,7 +28,7 @@ public class MapTextureMixinSquared {
             mixin = "net.raphimc.immediatelyfast.injection.mixins.map_atlas_generation.MixinMapTextureManager_MapInstance",
             name = "updateAtlasTexture"
     )
-    @Inject(method = "@MixinSquared:Handler", at = @At(value = "FIELD", target = "Lnet/minecraft/client/texture/MapTextureManager$MapTexture;needsUpdate:Z"))
+    @Inject(method = "@MixinSquared:Handler", at = @At(value = "FIELD", target = "Lnet/minecraft/client/resources/MapTextureManager$MapInstance;requiresUpload:Z"))
     public void onUpdateAtlasTexture(CallbackInfo ci) {
         if(!OUTDATED_DRIVER) {
             GL30.glGenerateMipmap(GL30.GL_TEXTURE_2D);

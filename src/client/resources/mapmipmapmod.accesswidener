@@ -1,4 +1,4 @@
-accessWidener v1 named
+accessWidener v1 official
 
-accessible class net/minecraft/client/texture/MapTextureManager$MapTexture
-accessible field net/minecraft/client/texture/GlTexture glId I
+accessible class net/minecraft/client/resources/MapTextureManager$MapInstance
+accessible field com/mojang/blaze3d/opengl/GlTexture id I

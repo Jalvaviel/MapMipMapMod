@@ -1,11 +1,11 @@
 package com.jalvaviel.config.enums;
 
-import net.minecraft.client.gui.tooltip.Tooltip;
-import net.minecraft.text.Text;
+import net.minecraft.client.gui.components.Tooltip;
+import net.minecraft.network.chat.Component;
 
 public interface GuiText {
-    Text getName();
-    Text getTextTooltip();
+    Component getName();
+    Component getTextTooltip();
     Tooltip getTooltip();
     int getId();
 }

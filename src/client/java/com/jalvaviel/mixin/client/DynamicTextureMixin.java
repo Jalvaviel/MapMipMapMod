@@ -2,15 +2,15 @@ package com.jalvaviel.mixin.client;
 
 import com.jalvaviel.MapMipMapModClient;
 import com.mojang.blaze3d.textures.FilterMode;
-import net.minecraft.client.texture.AbstractTexture;
-import net.minecraft.client.texture.NativeImageBackedTexture;
+import net.minecraft.client.renderer.texture.AbstractTexture;
+import net.minecraft.client.renderer.texture.DynamicTexture;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArgs;
 import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
-@Mixin(NativeImageBackedTexture.class)
-public class NativeImageBackedTextureMixin extends AbstractTexture {
+@Mixin(DynamicTexture.class)
+public class DynamicTextureMixin extends AbstractTexture {
 
     /**
      * Brittle workarounds to make the texture have mipmaps. If Mojang actually made a createTexture method with mipmap support this wouldn't be necessary.
@@ -29,7 +29,7 @@ public class NativeImageBackedTextureMixin extends AbstractTexture {
     }
 
     @ModifyArgs(method = "createTexture(Ljava/lang/String;)V", at = @At(value = "INVOKE",
-            target = "Lnet/minecraft/client/gl/SamplerCache;getRepeated(Lcom/mojang/blaze3d/textures/FilterMode;)Lnet/minecraft/client/gl/GpuSampler;"))
+            target = "Lcom/mojang/blaze3d/systems/SamplerCache;getRepeat(Lcom/mojang/blaze3d/textures/FilterMode;)Lcom/mojang/blaze3d/textures/GpuSampler;"))
     private void onSetTextureFilter(Args args, String name) {
         if (name.equals("ImmediatelyFast Map Atlas")) {
             args.set(0, FilterMode.LINEAR);

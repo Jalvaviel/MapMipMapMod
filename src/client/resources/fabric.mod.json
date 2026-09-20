@@ -1,7 +1,7 @@
 {
 	"schemaVersion": 1,
 	"id": "mapmipmapmod",
-	"version": "1.3.0",
+	"version": "1.3.1",
 	"name": "MapMipMapMod",
 	"description": "A Minecraft Mod that fixes the mipmaps for map textures.",
 	"authors": [
@@ -37,11 +37,11 @@
 		}
 	],
 	"depends": {
-		"fabricloader": ">=0.18.0",
-		"minecraft": ">=1.21.11",
+		"fabricloader": "*",
+		"minecraft": ">=26.1",
 		"java": ">=21",
 		"fabric-api": "*",
-		"immediatelyfast": ">=1.14.0"
+		"immediatelyfast": "*"
 	},
 	"suggests": {
 		"another-mod": "*"

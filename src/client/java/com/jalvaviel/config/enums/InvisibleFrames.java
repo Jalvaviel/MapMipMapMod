@@ -1,23 +1,23 @@
 package com.jalvaviel.config.enums;
 
-import net.minecraft.client.gui.tooltip.Tooltip;
-import net.minecraft.text.Text;
-import net.minecraft.util.function.ValueLists;
+import net.minecraft.client.gui.components.Tooltip;
+import net.minecraft.network.chat.Component;
+import net.minecraft.util.ByIdMap;
 
 import java.util.function.IntFunction;
 
 public enum InvisibleFrames implements GuiText {
-    DEFAULT(0, Text.translatable("entry.mapmipmapmod.invisible_frames_default"), Text.translatable("tooltip.mapmipmapmod.invisible_frames_default")),
-    ONLY_MAPS(1, Text.translatable("entry.mapmipmapmod.invisible_frames_only_maps"), Text.translatable("tooltip.mapmipmapmod.invisible_frames_only_maps")),
-    ALL(2, Text.translatable("entry.mapmipmapmod.invisible_frames_all"),Text.translatable("tooltip.mapmipmapmod.invisible_frames_all"));
+    DEFAULT(0, Component.translatable("entry.mapmipmapmod.invisible_frames_default"), Component.translatable("tooltip.mapmipmapmod.invisible_frames_default")),
+    ONLY_MAPS(1, Component.translatable("entry.mapmipmapmod.invisible_frames_only_maps"), Component.translatable("tooltip.mapmipmapmod.invisible_frames_only_maps")),
+    ALL(2, Component.translatable("entry.mapmipmapmod.invisible_frames_all"), Component.translatable("tooltip.mapmipmapmod.invisible_frames_all"));
 
-    private static final IntFunction<InvisibleFrames> BY_ID = ValueLists.createIndexToValueFunction(InvisibleFrames::getId, values(), ValueLists.OutOfBoundsHandling.WRAP);
+    private static final IntFunction<InvisibleFrames> BY_ID = ByIdMap.continuous(InvisibleFrames::getId, values(), ByIdMap.OutOfBoundsStrategy.WRAP);
 
     private final int id;
-    private final Text name;
-    private final Text tooltip;
+    private final Component name;
+    private final Component tooltip;
 
-    InvisibleFrames(final int id, final Text name, final Text tooltip) {
+    InvisibleFrames(final int id, final Component name, final Component tooltip) {
         this.id = id;
         this.name = name;
         this.tooltip = tooltip;
@@ -33,17 +33,17 @@ public enum InvisibleFrames implements GuiText {
     }
 
     @Override
-    public Text getName() {
+    public Component getName() {
         return name;
     }
 
     @Override
-    public Text getTextTooltip() {
+    public Component getTextTooltip() {
         return tooltip;
     }
 
     @Override
     public Tooltip getTooltip() {
-        return Tooltip.of(tooltip);
+        return Tooltip.create(tooltip);
     }
 }

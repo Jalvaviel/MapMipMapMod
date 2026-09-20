@@ -1,20 +1,20 @@
 package com.jalvaviel.mixin.client;
 
 import com.jalvaviel.config.MmmmOptionScreen;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.gui.screen.option.GameOptionsScreen;
-import net.minecraft.client.gui.screen.option.VideoOptionsScreen;
-import net.minecraft.client.gui.widget.ButtonWidget;
-import net.minecraft.client.option.GameOptions;
-import net.minecraft.text.Text;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.gui.screens.options.OptionsSubScreen;
+import net.minecraft.client.gui.screens.options.VideoSettingsScreen;
+import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.Options;
+import net.minecraft.network.chat.Component;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(VideoOptionsScreen.class)
-public abstract class VideoOptionsScreenMixin extends GameOptionsScreen {
+@Mixin(VideoSettingsScreen.class)
+public abstract class VideoSettingsScreenMixin extends OptionsSubScreen {
 
     /**
      * VideoOptionsScreenMixin constructor. It doesn't do anything since it gets discarded at compile time.
@@ -23,7 +23,7 @@ public abstract class VideoOptionsScreenMixin extends GameOptionsScreen {
      * @param gameOptions the game options.
      * @param title the title of the screen.
      */
-    public VideoOptionsScreenMixin(Screen parent, GameOptions gameOptions, Text title) {
+    public VideoSettingsScreenMixin(Screen parent, Options gameOptions, Component title) {
         super(parent, gameOptions, title);
     }
 
@@ -33,11 +33,11 @@ public abstract class VideoOptionsScreenMixin extends GameOptionsScreen {
      */
     @Inject(method = "addOptions", at = @At("TAIL"))
     protected void addOptions(CallbackInfo ci) {
-        ButtonWidget buttonWidget = ButtonWidget.builder(Text.translatable("settinggroup.mapmipmapmod.general"), buttonWidget1 ->
-            MinecraftClient.getInstance().setScreen(new MmmmOptionScreen((VideoOptionsScreen)(Object)this,gameOptions))
+        Button buttonWidget = Button.builder(Component.translatable("settinggroup.mapmipmapmod.general"), _ ->
+            Minecraft.getInstance().setScreen(new MmmmOptionScreen((VideoSettingsScreen)(Object)this, options))
         ).width(310).build();
-        assert this.body != null;
-        this.body.addHeader(Text.translatable("tab.mapmipmapmod.general"));
-        this.body.addWidgetEntry(buttonWidget,null);
+        assert this.list != null;
+        this.list.addHeader(Component.translatable("tab.mapmipmapmod.general"));
+        this.list.addSmall(buttonWidget,null);
     }
 }
